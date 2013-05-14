@@ -53,6 +53,10 @@ A stream script defines the source of your data. A query’s results (In the cas
 
 - Live CLI
 
+<a href="http://www.flickr.com/photos/95752811@N04/8738542001/" title="refine1 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7286/8738542001_8b182dfcde.jpg" width="376" height="345" alt="refine1"></a>
+<a href="http://www.flickr.com/photos/95752811@N04/8738542005/" title="refine2 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7285/8738542005_763e502a33.jpg" width="376" height="345" alt="refine2"></a>
+<a href="http://www.flickr.com/photos/95752811@N04/8739661106/" title="refine3 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7283/8739661106_1894aec094.jpg" width="376" height="345" alt="refine3"></a>
+<a href="http://www.flickr.com/photos/95752811@N04/8738541955/" title="refine4 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7282/8738541955_ccac2229ee.jpg" width="376" height="345" alt="refine4"></a>
 
 ##What are some examples?
 
