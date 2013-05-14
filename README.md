@@ -1,7 +1,7 @@
 Surfiki Refine for Elasticsearch (Non Distributed Version)
 
 
-Python Map-Reduce Transformation Tier for Elasticsearch Indices
+Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
 
 
 ##What is Refine?
@@ -35,6 +35,18 @@ A stream script defines the source of your data. A query’s results (In the cas
 
 
  - You can add as many scripts that your job may require, however the core is the stream, mapper and reducer scripts.
+ 
+##What are some cool features?
+
+- Online Browser based code editing, job management and results collection.
+
+- Job Testing (Syntax & Job functions)
+
+- Job Scheduling
+
+- Job Duplication
+
+- Live CLI
 
 
 ##What are some examples?
@@ -91,6 +103,8 @@ validation criteria such as geographic region or category.
 - [PyFlakes](https://pypi.python.org/pypi/pyflakes)
 
 - [ujson](https://pypi.python.org/pypi/ujson)
+
+- [pyes](https://github.com/aparo/pyes)
 
 
 ---
