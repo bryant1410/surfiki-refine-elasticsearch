@@ -115,12 +115,28 @@ validation criteria such as geographic region or category.
 
 - [pyes](https://github.com/aparo/pyes)
 
+- [node.js](http://nodejs.org/)
+
 
 ---
 
 
 ##Installation Instructions
 
+The editor portion of Refine uses a specific version of node.js:
+
+	Install node.js v0.6.21
+
+	Install source mint globally
+	$ npm install -g sm
+
+	Install and build modules 
+	$ cd cloud9
+	$ sm install
+
+	Install cloud9 as an upstart job 
+	$ cp cloud9.conf /etc/init/
+	$ start cloud9
 
 ##Usage Instructions
 
