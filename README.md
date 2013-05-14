@@ -59,7 +59,6 @@ A stream script defines the source of your data. A query’s results (In the cas
 
 
 - Given a collection of results, you can use Refine to further score each result against a series of 
-
 validation criteria such as geographic region or category.
 
 
