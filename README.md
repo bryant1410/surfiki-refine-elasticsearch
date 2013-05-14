@@ -3,6 +3,11 @@ Surfiki Refine for Elasticsearch (Non Distributed Version)
 
 Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
 
+#####Part of the Surfiki Data Engine
+- [Surfiki REBIN](http://intridea.github.io/REBIN/)
+- [Surifki Developer API](http://developer.surfiki.com/)
+- [Surfiki.com](http://www.surfiki.com)
+
 
 ##What is Refine?
 
