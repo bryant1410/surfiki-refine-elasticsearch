@@ -68,29 +68,29 @@ validation criteria such as geographic region or category.
 ###Open Source Projects utilized:
 
 
-- redis
+- [redis](http://redis.io/)
 
-- Paramedic
+- [Paramedic](https://github.com/karmi/elasticsearch-paramedic)
 
-- Sense
+- [Sense](https://github.com/bleskes/sense)
 
-- r3
+- [r3](https://github.com/heynemann/r3)
 
-- Python Dev Bootstrap
+- [Python Dev Bootstrap](http://anthonynystrom.github.io/python-dev-bootstrap/)
 
-- Lookout
+- [Lookout](https://github.com/delan/lookout)
 
-- Flask
+- [Flask](http://flask.pocoo.org/)
 
-- Twitter Bootstrap
+- [Twitter Bootstrap](http://twitter.github.io/bootstrap/)
 
-- Cloud9
+- [Cloud9](https://github.com/ajaxorg/cloud9/)
 
-- Python
+- [Python](http://python.org/)
 
-- PyFlakes
+- [PyFlakes](https://pypi.python.org/pypi/pyflakes)
 
-- ujson
+- [ujson](https://pypi.python.org/pypi/ujson)
 
 
 ---
