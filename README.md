@@ -121,7 +121,7 @@ validation criteria such as geographic region or category.
 
 Special Mention:
 
-Many thanks go out to Bernardo Heynemann for his excellent work with r3.
+Many thanks go out to Bernardo Heynemann for his excellent work with r3 and c9.io for Cloud9.
 
 
 ---
