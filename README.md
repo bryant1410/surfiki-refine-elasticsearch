@@ -117,6 +117,10 @@ validation criteria such as geographic region or category.
 
 - [node.js](http://nodejs.org/)
 
+Special Mention:
+
+Many thanks go out to Bernardo Heynemann for his excellent work with r3.
+
 
 ---
 
