@@ -1,4 +1,4 @@
-Surfiki Refine for Elasticsearch (Non Distributed Version)
+Surfiki Refine for Elasticsearch (Non Distributed Version) - If you are interested in the distributed version of Refine, please contact Intridea.
 
 
 Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
