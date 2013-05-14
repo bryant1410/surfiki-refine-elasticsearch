@@ -101,11 +101,3 @@ validation criteria such as geographic region or category.
 
 ##Usage Instructions
 
-
---
-Anthony Nyström
-Fellow, Managing Director of Engineering
-Intridea, Inc. | www.intridea.com
-anthony@intridea.com
-(o) 888.968.4332 x502
-(c) 650.417.3203
