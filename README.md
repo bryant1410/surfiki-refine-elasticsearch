@@ -1,7 +1,9 @@
-Surfiki Refine for Elasticsearch (Non Distributed Version) - If you are interested in the distributed version of Refine, please contact Intridea.
+##Surfiki Refine for Elasticsearch (Non Distributed Version)
+
+- If you are interested in the distributed version of Refine, please contact Intridea.
 
 
-Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
+###Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
 
 #####Part of the Surfiki Data Engine
 - [Surfiki REBIN](http://intridea.github.io/REBIN/)
@@ -9,7 +11,7 @@ Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch 
 - [Surfiki.com](http://www.surfiki.com)
 
 
-##What is Refine?
+###What is Refine?
 
 
 Originally designed to work with Elasticsearch indices and API. Refine allows you to take an input stream, transform and or manipulate it for your needs, then output it in a variety of formats.
@@ -21,7 +23,7 @@ With the variety of uses of Elasticsearch being seen in the its ecosystem (Searc
 At its heart, Refine is a collection of scripts, written by you in Python.
 
 
-##How does it work?
+###How does it work?
 
 
 Technically, Refine is Map-Reduce, which for each job you define incorporates:
@@ -41,7 +43,7 @@ A stream script defines the source of your data. A query’s results (In the cas
 
  - You can add as many scripts that your job may require, however the core is the stream, mapper and reducer scripts.
  
-##What are some cool features?
+###What are some cool features?
 
 - Online Browser based code editing, job management and results collection.
 
@@ -58,7 +60,7 @@ A stream script defines the source of your data. A query’s results (In the cas
 <a href="http://www.flickr.com/photos/95752811@N04/8739661106/" title="refine3 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7283/8739661106_1894aec094.jpg" width="376" height="345" alt="refine3"></a>
 <a href="http://www.flickr.com/photos/95752811@N04/8738541955/" title="refine4 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7282/8738541955_ccac2229ee.jpg" width="376" height="345" alt="refine4"></a>
 
-##What are some examples?
+###What are some examples?
 
 
 - Combining data from multiple indices in to a new index. With Refine you can either do this ad hoc or on a scheduled basis.
@@ -125,7 +127,7 @@ Many thanks go out to Bernardo Heynemann for his excellent work with r3.
 ---
 
 
-##Installation Instructions
+###Installation Instructions
 
 The editor portion of Refine uses a specific version of node.js:
 
@@ -142,5 +144,5 @@ The editor portion of Refine uses a specific version of node.js:
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
 
-##Usage Instructions
+###Usage Instructions
 
