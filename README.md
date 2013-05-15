@@ -129,20 +129,59 @@ Many thanks go out to Bernardo Heynemann for his excellent work with r3 and c9.i
 
 ###Installation Instructions
 
+Supported Operating Systems: LINUX
+
+Install Redis
+
+	$ cd /usr/local/src
+	$ sudo wget http://redis.googlecode.com/files/redis-2.6.10.tar.gz
+	$ sudo tar -xzf redis-2.6.10.tar.gz
+	$ cd redis-2.6.10/
+
+	$ sudo make
+	$ sudo make install
+
+	$ cd utils
+
+	$ sudo ./install_server.sh
+
+
+
+
 The editor portion of Refine uses a specific version of node.js:
 
-	Install node.js v0.6.21
+Install node.js v0.6.21
+	
+	$ sudo apt-get update
+	$ sudo apt-get install build-essential openssl libssl-dev pkg-config git-core
+
+	$ cd /usr/local/src
+	$ sudo wget http://nodejs.org/dist/v0.6.21/node-v0.6.21.tar.gz
+	$ sudo tar -xzf node-v0.6.21.tar.gz
+	$ cd node-v0.6.21/
+
+	$ sudo ./configure
+	$ sudo make
+	$ sudo make install
 
 	Install source mint globally
+	
 	$ npm install -g sm
 
 	Install and build modules 
+	
 	$ cd cloud9
 	$ sm install
 
 	Install cloud9 as an upstart job 
+	
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
 
+Clone Project and install dependencies
+ 
+    $ cd /var/local
+    $ sudo git clone https://github.com/intridea/REBIN.git
+    
 ###Usage Instructions
 
