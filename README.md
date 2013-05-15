@@ -29,13 +29,12 @@ At its heart, Refine is a collection of scripts, written by you in Python.
 Technically, Refine is Map-Reduce, which for each job you define incorporates:
 
 
-A stream script defines the source of your data. A query’s results (In the case of Elasticsearch) A file or files, or a Web API such as Twitter.
+ - A stream script defines the source of your data. A query’s results (In the case of Elasticsearch) A file or files, or a Web API such as Twitter.
 
 
  - A mapper script takes the input, divides it into smaller sub-problems, and distributes them to workers. 
 
-
- - A worker may do this again in turn, leading to a multi-level tree structure. The worker processes the smaller problem, and passes the answer back to its master.
+- A worker may do this again in turn, leading to a multi-level tree structure. The worker processes the smaller problem, and passes the answer back to its master.
 
 
  - A reducer script collects the answers to all the sub-problems and combines them in some way to form the output – the answer to the problem it was originally trying to solve.
