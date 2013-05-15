@@ -159,6 +159,7 @@ Install Dependencies
 	$ pip install hiredis
 	$ pip install pyflakes
 	$ pip install pyes
+	$ pip install pyelasticsearch
 
 The editor portion of Refine uses a specific version of node.js:
 
@@ -175,6 +176,8 @@ Install node.js v0.6.21
 	$ sudo ./configure
 	$ sudo make
 	$ sudo make install
+	
+Install Cloud9 Editor
 
 	Install source mint globally
 	
