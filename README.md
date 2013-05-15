@@ -92,33 +92,18 @@ validation criteria such as geographic region or category.
 
 
 - [redis](http://redis.io/)
-
 - [Paramedic](https://github.com/karmi/elasticsearch-paramedic)
-
 - [Sense](https://github.com/bleskes/sense)
-
 - [r3](https://github.com/heynemann/r3)
-
 - [Python Dev Bootstrap](http://anthonynystrom.github.io/python-dev-bootstrap/)
-
 - [Lookout](https://github.com/delan/lookout)
-
 - [Flask](http://flask.pocoo.org/)
-
 - [Twitter Bootstrap](http://twitter.github.io/bootstrap/)
-
 - [Cloud9](https://github.com/ajaxorg/cloud9/)
-
 - [Python](http://python.org/)
-
 - [PyFlakes](https://pypi.python.org/pypi/pyflakes)
-
 - [ujson](https://pypi.python.org/pypi/ujson)
-
-- [pyes](https://github.com/aparo/pyes)
-
 - [pyelasticsearch](https://github.com/rhec/pyelasticsearch)
-
 - [node.js](http://nodejs.org/)
 
 Special Mention:
@@ -160,7 +145,6 @@ Install Dependencies
 	$ pip install argparse
 	$ pip install hiredis
 	$ pip install pyflakes
-	$ pip install pyes
 	$ pip install pyelasticsearch
 
 The editor portion of Refine uses a specific version of node.js:
