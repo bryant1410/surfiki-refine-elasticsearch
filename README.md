@@ -129,7 +129,7 @@ Many thanks go out to Bernardo Heynemann for his excellent work with r3 and c9.i
 
 ###Installation Instructions
 
-Supported Operating Systems: LINUX
+Supported Operating System: LINUX
 
 Install Redis
 
@@ -180,8 +180,7 @@ Install node.js v0.6.21
 
 Clone Project and install dependencies
  
-    $ cd /var/local
-    $ sudo git clone https://github.com/intridea/REBIN.git
+    $ sudo git clone https://github.com/intridea/surfiki-refine-elasticsearch.git
     
 ###Usage Instructions
 
