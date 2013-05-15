@@ -131,7 +131,11 @@ Many thanks go out to Bernardo Heynemann for his excellent work with r3 and c9.i
 
 Supported Operating System: LINUX
 
-Install Redis
+Clone Project
+ 
+    $ sudo git clone https://github.com/intridea/surfiki-refine-elasticsearch.git
+    
+Install redis
 
 	$ cd /usr/local/src
 	$ sudo wget http://redis.googlecode.com/files/redis-2.6.10.tar.gz
@@ -144,9 +148,17 @@ Install Redis
 	$ cd utils
 
 	$ sudo ./install_server.sh
+    
+Install Dependencies
 
-
-
+	$ pip install tornado-redis
+	$ pip install tornado
+	$ pip install ujson
+	$ pip install flask
+	$ pip install argparse
+	$ pip install hiredis
+	$ pip install pyflakes
+	$ pip install pyes
 
 The editor portion of Refine uses a specific version of node.js:
 
@@ -173,14 +185,12 @@ Install node.js v0.6.21
 	$ cd cloud9
 	$ sm install
 
-	Install cloud9 as an upstart job 
+	Install cloud9 (from the Surfiki Refine Repo) as an upstart job 
 	
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
 
-Clone Project and install dependencies
- 
-    $ sudo git clone https://github.com/intridea/surfiki-refine-elasticsearch.git
+
     
 ###Usage Instructions
 
