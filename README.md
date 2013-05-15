@@ -117,6 +117,8 @@ validation criteria such as geographic region or category.
 
 - [pyes](https://github.com/aparo/pyes)
 
+- [pyelasticsearch](https://github.com/rhec/pyelasticsearch)
+
 - [node.js](http://nodejs.org/)
 
 Special Mention:
