@@ -54,7 +54,7 @@ Technically, Refine is Map-Reduce, which for each job you define incorporates:
 
 - Live CLI
 
-- Distributed Jobs and Management (Commodity Servers) (- If you are interested in the distributed version of Refine, please contact [Intridea](http://www.intridea.com).)
+- Distributed (Commodity Servers) Jobs and Management (If you are interested in the distributed version of Refine, please contact [Intridea](http://www.intridea.com).)
 
 <a href="http://www.flickr.com/photos/95752811@N04/8738542001/" title="refine1 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7286/8738542001_8b182dfcde.jpg" width="376" height="345" alt="refine1"></a>
 <a href="http://www.flickr.com/photos/95752811@N04/8738542005/" title="refine2 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7285/8738542005_763e502a33.jpg" width="376" height="345" alt="refine2"></a>
