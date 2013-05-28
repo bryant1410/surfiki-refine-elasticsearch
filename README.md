@@ -54,6 +54,8 @@ Technically, Refine is Map-Reduce, which for each job you define incorporates:
 
 - Live CLI
 
+- Distributed Jobs and Management (Commodity Servers) (- If you are interested in the distributed version of Refine, please contact [Intridea](http://www.intridea.com).)
+
 <a href="http://www.flickr.com/photos/95752811@N04/8738542001/" title="refine1 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7286/8738542001_8b182dfcde.jpg" width="376" height="345" alt="refine1"></a>
 <a href="http://www.flickr.com/photos/95752811@N04/8738542005/" title="refine2 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7285/8738542005_763e502a33.jpg" width="376" height="345" alt="refine2"></a>
 <a href="http://www.flickr.com/photos/95752811@N04/8739661106/" title="refine3 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7283/8739661106_1894aec094.jpg" width="376" height="345" alt="refine3"></a>
@@ -104,6 +106,7 @@ validation criteria such as geographic region or category.
 - [ujson](https://pypi.python.org/pypi/ujson)
 - [pyelasticsearch](https://github.com/rhec/pyelasticsearch)
 - [node.js](http://nodejs.org/)
+- [watchdog](http://pythonhosted.org/watchdog/)
 
 Special Mention:
 
@@ -145,6 +148,7 @@ Install Dependencies
 	$ pip install hiredis
 	$ pip install pyflakes
 	$ pip install pyelasticsearch
+	$ pip install watchdog
 
 The editor portion of Refine uses a specific version of node.js:
 
@@ -177,7 +181,29 @@ Install Cloud9 Editor
 	
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
+	
+Configure Surfiki Refine
 
+	Edit /refine/web/config.py
+	
+	#!/usr/bin/python
+	# -*- coding: utf-8 -*-
+
+	DEBUG = True
+	SECRET_KEY = 'development key'
+
+	WEB_HOST = 'URL'
+	WEB_PORT = 8888
+	UPLOAD_FOLDER = '/root/refine/jobs/refine/'
+
+	REDIS_HOST = 'localhost'
+	REDIS_PORT = 7778
+	REDIS_PASS = 'surfikiMR'
+	
+Start Surfiki Refine
+
+	
+	$ ./refine/startup.sh
 
     
 ###Usage Instructions
