@@ -200,10 +200,15 @@ Configure Surfiki Refine
 	REDIS_PORT = 7778
 	REDIS_PASS = 'surfikiMR'
 	
-Start Surfiki Refine
+Starting Surfiki Refine
 
 	
-	$ ./refine/startup.sh
+	$ ./refine/server_startup.sh
+	
+Stopping Surfiki Refine
+
+	
+	$ ./refine/server_cleanup.sh
 
     
 ###Usage Instructions
@@ -253,7 +258,7 @@ Included with Refine is a template job. Let's walk through using that as the bas
               "must": [
                 {
                   "range": {
-                    "dtInsertDT": {
+                    "A DATE TIME FIELD IN YOUR INDEX": {
                       "from": begin,
                       "to": current
                     }
@@ -323,7 +328,53 @@ Included with Refine is a template job. Let's walk through using that as the bas
 
     	def split_words(self, hits):
         	for hit in hits:
-            	keywords = hit['_source']['strKeywords']
+            	keywords = hit['_source']['A COMMA DELIMITED KEYWORD FIELD IN YOUR INDEX']
+            	for word in keywords.split(','):
+                	if len(word.strip()) >= 2:
+                    	yield word.strip().strip('.').strip(','), 1
+
+        
+---
+
+	#FILE: surfiki_anthonytest_mapper.py
+
+
+	#!/usr/bin/python
+	# -*- coding: utf-8 -*-
+
+	from refine.worker.mapper import Mapper
+	import os
+	import nltk
+	import sys
+	import urllib
+	import httplib
+	import hashlib
+	from time import sleep
+	from datetime import datetime, date
+	from decimal import Decimal
+	import re
+	import json
+	import unittest
+	import socket
+	import requests
+	import six
+	import time
+	
+	# Test that __all__ is sufficient:
+	from pyelasticsearch import *
+	from pyelasticsearch.client import es_kwargs
+
+	class SurfikianthonytestMapper(Mapper):
+    	job_type = 'anthonytest'
+     
+    	def map(self, hits):
+        	#time.sleep(0.5)
+        	print os.getpid()
+        	return list(self.split_words(hits))
+
+    	def split_words(self, hits):
+        	for hit in hits:
+            	keywords = hit['_source']['A COMMA DELIMITED KEYWORD FIELD IN YOUR INDEX']
             	for word in keywords.split(','):
                 	if len(word.strip()) >= 2:
                     	yield word.strip().strip('.').strip(','), 1
