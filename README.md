@@ -232,6 +232,12 @@ Job Testing: You can easily test your job before actually running it. Simply, cl
 
 ---
 
+###Templates 
+
+This assumes you have an Elasticsearch index with keywords and a date field that has been updated in the list n minutes. You likely will need to modify for your particular schema/s. It is a template to assist in understand the structure and use.
+
+
+
 	#FILE: surfiki_DempTemplate_stream.py
 
 
@@ -380,7 +386,7 @@ Job Testing: You can easily test your job before actually running it. Simply, cl
         	for line in items:
             	for word, frequency in line:
                 	word_freq[word] += frequency
-        	# make all things in word_freq to a test index (EXAMPLE WHERE RESULTS ARE ADDED TO AN ELASTIC INDEX)
+        	# Write word_freq values to a test index (EXAMPLE WHERE RESULTS ARE ADDED TO AN ELASTIC INDEX)
         	for word in word_freq:
             	key = {}
             	key['name'] = word
