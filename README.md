@@ -398,3 +398,31 @@ This assumes you have an Elasticsearch index with keywords and a date field that
         
 ---
 
+	#FILE: surfiki_DemoTemplate_reducer.py
+	
+	#!/usr/bin/python
+	# -*- coding: utf-8 -*-
+
+	#DescDemonstration Job Template
+	INPUT_STREAMS = [
+    	'DemoTemplate.surfiki_DemoTemplate_stream.SurfikiDemoTemplateStream']
+	REDUCERS = [
+    	'DemoTemplate.surfiki_DemoTemplate_reducer.SurfikiDemoTemplateReducer']
+    	
+---
+
+###Code Editing
+
+All job code editing is performed online via the browser based IDE. If you prefer, you can edit offline and upload them; whichever is your preference.
+
+<a href="http://www.flickr.com/photos/95752811@N04/8917271544/" title="CodingInterface by NyströmAnthony, on Flickr"><img src="http://farm6.staticflickr.com/5449/8917271544_2294a111c7.jpg" width="500" height="424" alt="CodingInterface"></a>
+
+Above you see the four specific areas within the interface. When you select the edit button from the jobs sub tab, the editor will open with all files that define that job. You can make your edits and your changes will auto save. Because your stream stream file is used for the primary queries against your Elasticsearch cluster, it is convientent to also have the Elasticsearch Query Editor within the IDE such that you can formulate your query in advance of inlcuding it within the job.
+
+-
+
+When your changes are complete, click the Return To Jobs menu item. As seen below.
+
+<a href="http://www.flickr.com/photos/95752811@N04/8916658237/" title="ReturnToJobs by NyströmAnthony, on Flickr"><img src="http://farm3.staticflickr.com/2856/8916658237_5624d30aac.jpg" width="500" height="389" alt="ReturnToJobs"></a>
+
+ 
