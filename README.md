@@ -149,6 +149,8 @@ Install Dependencies
 	$ pip install pyflakes
 	$ pip install pyelasticsearch
 	$ pip install watchdog
+	$ pip install numpy - THIS IS OPTIONAL
+	$ pip install pyyaml nltk
 
 The editor portion of Refine uses a specific version of node.js:
 
