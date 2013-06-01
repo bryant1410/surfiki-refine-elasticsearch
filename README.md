@@ -215,9 +215,22 @@ Stopping Surfiki Refine
 
 Included with Refine is a template job. Let's walk through using that as the basis for any job you may need to write.
 
+1. On the Jobs Sub Tab, click the "Create New Job" button.
+2. You can either manually upload your files, or allow Refine to build the required files for you and populate with the provided template. Using the "Automatically Generate Job Files".
+	- Input your desired Job Name.
+  - Optionally provide a Job Desc: (Description)
+  - Click the submit button.
+3. Return to the Jobs Sub Tab and you will see your new job listed.
+4. Click your job and set the number of mappers you want created when your job runs. The default is 5. If you decide the default value is fine, you still need to click the Set/Save (Required) button.
+5. You will now see a link next to the Job Result Link label. Clicking this link will start the job. You will notice a new tabs opens in your browser. This is where your results will be shown. This is the case even if your job results are written to an index. Closing the tab will cancel the job. 
+
+Notes: If you choose to schedule your job, the secondary results tab will not be available unless you manually click the Job Results Link. As well, while the results tabs are open, you are free to move around the sub tabs examining current load characteristics either upon the Server running the job and or your Elasticsearch cluster. This can be helpful in understanding how your code/job is functioning with your cluster.
+
+Job Testing: You can easily test your job before actually running it. Simply, click the Enable Test button, then click the link created next to the Job Test Result Link. You will notice a new tabs opens in your browser. This is where your test results will be shown.
+
 ---
 
-	#FILE: surfiki_anthonytest_stream.py
+	#FILE: surfiki_DempTemplate_stream.py
 
 
 	#!/usr/bin/python
@@ -237,60 +250,57 @@ Included with Refine is a template job. Let's walk through using that as the bas
 	import six
 
 	# Test that __all__ is sufficient:
-	
 	from pyelasticsearch import *
 	from pyelasticsearch.client import es_kwargs
-	class SurfikianthonytestStream:
-    job_type = 'anthonytest'
-    group_size = 20
+	class SurfikiDemoTemplateStream:
+    	job_type = 'DemoTemplate'
+    	group_size = 20
 
-    def process(self, app, arguments):
-        batch_size = 1000
-        # Init the instance for search
-        es = ElasticSearch('YOUR ELASTICSEARCH ENDPOINT')
-        current = int(round(time.time() * 1000))
-        # 15 minutes ago 
-        begin = current - (1000 * 60 * 60) / 4
-        # Query Example
-        query = {
-          "query": {
-            "bool": {
-              "must": [
-                {
-                  "range": {
-                    "A DATE TIME FIELD IN YOUR INDEX": {
-                      "from": begin,
-                      "to": current
-                    }
-                  }
-                }
-              ],
-              "must_not": [],
-              "should": []
-            }
-          },
-          "from": 0,
-          "size": 100000,
-          "sort": [],
-          "facets": {}
-        }
-        result = es.search(query, index='surfiki', es_from=0, size=0)
-        
-        # Get the total number of hits, preparing for paging control
-        total = int(str(result['hits']['total']))
-        print total
-        query_res = []
-        
-        # Paging handling using from--size ES Query API
-        for index in range(0, (total - 1)/batch_size + 1):
-            result = es.search(query, index='surfiki', es_from=index*batch_size, size=batch_size)
-            hits = result['hits']['hits']
-            query_res = query_res + hits
-        return query_res
+    	def process(self, app, arguments):
+        	batch_size = 1000
+        	# Init the instance for search
+        	es = ElasticSearch('YOUR ELASTIC SEARCH ENDPOINT')
+        	current = int(round(time.time() * 1000))
+        	# 15 minutes ago 
+        	begin = current - (1000 * 60 * 60) / 4
+        	# Query Example
+        	query = {
+          	"query": {
+            	"bool": {
+              	"must": [
+                	{
+                  	"range": {
+                    	"YOUR INDEX DATE FIELD": {
+                      	"from": begin,
+                      	"to": current
+                    	}
+                  	}
+                	}
+              	],
+              	"must_not": [],
+              	"should": []
+            	}
+          	},
+          	"from": 0,
+          	"size": 100000,
+          	"sort": [],
+          	"facets": {}
+        	}
+        	result = es.search(query, index='YOUR ELASTIC SEARCH INDEX', es_from=0, size=0)
+        	# Get the total number of hits, preparing for paging control
+        	total = int(str(result['hits']['total']))
+        	print total
+        	query_res = []
+        	# Paging handling using from--size ES Query API
+        	for index in range(0, (total - 1)/batch_size + 1):
+            	result = es.search(query, index='YOUR ELASTIC SEARCH INDEX', es_from=index*batch_size, size=batch_size)
+            	hits = result['hits']['hits']
+            	query_res = query_res + hits
+        	return query_res
         
 ---
 
-	#FILE: surfiki_anthonytest_mapper.py
+	#FILE: surfiki_DemoTemplate_mapper.py
 
 
 	#!/usr/bin/python
@@ -313,13 +323,12 @@ Included with Refine is a template job. Let's walk through using that as the bas
 	import requests
 	import six
 	import time
-	
 	# Test that __all__ is sufficient:
 	from pyelasticsearch import *
 	from pyelasticsearch.client import es_kwargs
 
-	class SurfikianthonytestMapper(Mapper):
-    	job_type = 'anthonytest'
+	class SurfikiDemoTemplateMapper(Mapper):
+    	job_type = 'DemoTemplate'
      
     	def map(self, hits):
         	#time.sleep(0.5)
@@ -328,56 +337,55 @@ Included with Refine is a template job. Let's walk through using that as the bas
 
     	def split_words(self, hits):
         	for hit in hits:
-            	keywords = hit['_source']['A COMMA DELIMITED KEYWORD FIELD IN YOUR INDEX']
+            	keywords = hit['_source']['YOUR KEYWORD FIELD WITHIN YOUR INDEX']
             	for word in keywords.split(','):
                 	if len(word.strip()) >= 2:
                     	yield word.strip().strip('.').strip(','), 1
 
+
         
 ---
 
-	#FILE: surfiki_anthonytest_mapper.py
+	#FILE: surfiki_DemoTemplate_reducer.py
 
 
 	#!/usr/bin/python
 	# -*- coding: utf-8 -*-
 
-	from refine.worker.mapper import Mapper
-	import os
+	from collections import defaultdict
 	import nltk
+	import os
 	import sys
-	import urllib
-	import httplib
-	import hashlib
-	from time import sleep
+	from os.path import abspath, dirname, join
 	from datetime import datetime, date
 	from decimal import Decimal
-	import re
-	import json
 	import unittest
-	import socket
+
 	import requests
 	import six
 	import time
-	
 	# Test that __all__ is sufficient:
 	from pyelasticsearch import *
 	from pyelasticsearch.client import es_kwargs
 
-	class SurfikianthonytestMapper(Mapper):
-    	job_type = 'anthonytest'
-     
-    	def map(self, hits):
-        	#time.sleep(0.5)
-        	print os.getpid()
-        	return list(self.split_words(hits))
+	class SurfikiDemoTemplateReducer:
+    	job_type = 'DemoTemplate'
 
-    	def split_words(self, hits):
-        	for hit in hits:
-            	keywords = hit['_source']['A COMMA DELIMITED KEYWORD FIELD IN YOUR INDEX']
-            	for word in keywords.split(','):
-                	if len(word.strip()) >= 2:
-                    	yield word.strip().strip('.').strip(','), 1
+    	def reduce(self, app, items):
+        	# Init the instance for search
+        	es = ElasticSearch('YOUR ELASTIC SEARCH ENDPOINT')
+        	word_freq = defaultdict(int)
+        	for line in items:
+            	for word, frequency in line:
+                	word_freq[word] += frequency
+        	# make all things in word_freq to a test index (EXAMPLE WHERE RESULTS ARE ADDED TO AN ELASTIC INDEX)
+        	for word in word_freq:
+            	key = {}
+            	key['name'] = word
+            	key['count'] = word_freq[word]
+            	es.index("YOUR NEW INDEX", "YOUR NEW INDEX", key)
+        	return word_freq
+
 
         
 ---
