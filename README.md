@@ -150,7 +150,7 @@ Install Dependencies
 	$ pip install pyelasticsearch
 	$ pip install watchdog
 	$ pip install numpy - THIS IS OPTIONAL
-	$ pip install pyyaml nltk
+	$ pip install pyyaml nltk - THIS IS OPTIONAL (It is an import within the template, remove as needed)
 
 The editor portion of Refine uses a specific version of node.js:
 
