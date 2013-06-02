@@ -1,0 +1,52 @@
+{% extends "master.html" %}
+
+{% block title %} - Configuration{% endblock %}
+
+{% block body %}
+<div class="tab-content">
+  <div class="tab-pane active" id="settings">
+    {% if success %}
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      Your settings have been saved.
+    </div>
+    {% endif %}
+    
+    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+      <div class="control-group">
+        <label class="control-label" for="nodes">Nodes</label>
+        <div class="controls">
+          <span class="label label-info">If you are interested in the distributed version of Refine, please contact Intridea</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="endpoint">ElasticSearch Endpoint</label>
+        <div class="controls">
+          <input type="text" id="endpoint" name="endpoint" value="{{ endpoint }}">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn">Save</button>
+        </div>
+      </div>
+    </form>
+    
+    <h2>redis.surfiki.globoi.com:20001</h2>
+
+    <table class="redis table table-striped table-bordered table-condensed">
+        <tbody>
+            {% for key, value in info.items() %}
+            <tr>
+                <td class="key">{{ key }}</td>
+                <td class="value">{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+

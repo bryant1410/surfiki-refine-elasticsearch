@@ -1,0 +1,36 @@
+{% extends "master.html" %}
+
+{% block title %} - Overview{% endblock %}
+
+{% block body %}
+<table class="mappers-table table table-striped table-bordered">
+  <thead>
+      <tr>
+          <th class="mapper-name">Upload Description</th>
+      </tr>
+  </thead>
+  <tbody>
+    <form action="" method=post enctype=multipart/form-data>
+      <tr><td>Input your job name         :  <input type="text" name="Job Type"></td></tr>
+      <tr><td>Input your file for app     :  <input type=file name=appconfig></td></tr>
+      <tr><td>Input your file for stream  :  <input type=file name=streamfile></td></tr>
+      <tr><td>Input your file for mapper  :  <input type=file name=mapperfile></td></tr>
+      <tr><td>Input your file for reducer :  <input type=file name=reducerfile></td></tr>
+      <tr><td>Input Job Desc : <input type = "text" name = "Desc"></td></tr>
+      <tr><td><input class="btn btn-primary" type="submit" value="Submit">  <a class="btn" href="{{ url_for('start') }}">Cancel</a></td></tr>
+    </form>
+  </tbody>
+  <thead>
+      <tr>
+          <th class="mapper-name">Automatically Generate Job Files</th>
+      </tr>
+  </thead>
+  <tbody>
+    <form action="" method=post enctype=multipart/form-data>
+     <tr><td>Input Job Name (Automatically Generated) : <input type = "text" name = "Auto Job Type"></td></tr>
+     <tr><td>Input Job Desc : <input type = "text" name = "Desc"></td></tr>
+     <tr><td><input class="btn btn-primary" type="submit" value="Submit">  <a class="btn" href="{{ url_for('start') }}">Cancel</a></td></tr>
+     </form>
+  </tbody>
+</table>
+{% endblock %}

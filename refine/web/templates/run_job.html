@@ -1,0 +1,140 @@
+{% extends "master.html" %}
+
+{% block title %} - Jobs{% endblock %}
+
+{% block js %}
+<script>
+$(function() {
+  $(".job_toggle").click(function() {
+    $("#"+$(this).data("id")).toggle();
+    return false;
+  });
+});
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="tab-content">
+  <div class="tab-pane active" id="jobs">
+    <div style="padding: 5px 0px 15px 0px">
+      <a class="btn" href="/upload" alt="upload">Create New Job</a>
+    </div>
+
+    <form class="form-inline" style="margin-bottom: 20px" action="" method="post" enctype="multipart/form-data">
+      <label>Input the job name : </label>
+      <input type="text" name="Kill">
+      <input class="btn" type="submit" value="Kill Job">
+    </form>    
+    {% for jobdef in g.jobsdef.keys() %}
+        <div class="well well-small"><div class="pull-right">Phase: {{g.jobstatus[jobdef]}}</div><h4 style="line-height: 0px; font-weight: normal"><a class="job_toggle" data-id="id_{{ jobdef }}" href="#"><strong>{{ jobdef }}</strong> - {{g.jobsdesc[jobdef]}}</a></h4></div>
+        <table id="id_{{ jobdef }}" class="mappers-table table table-striped table-bordered hide">
+            <thead>
+            <tr>
+              <th class="action">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+              <td>
+                <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                  <label>Code: </label>
+                  <input type="hidden" name="Job Type" value="{{jobdef}}">
+                  <input type="hidden" name="Filename" value="{% for files in g.jobsdef.get(jobdef) %}{{files}}|{% endfor %}">
+                  <input type="submit" class="btn" name="Edit" value="Edit">
+                </form>
+              </td>
+            </tr>
+
+            <tr>
+             <td>
+               <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                 <label>Job Description: {{g.jobsdesc[jobdef]}} </label>
+                 <input type="hidden" name="Job Type" value="{{jobdef}}">
+                 <input type="text" name="Description">
+                 <input type="submit" class="btn" value="Change Description">
+                </form>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                  <label>Job Schedule: {{g.jobschedules[jobdef]}} </label>
+                  <input type="hidden" name="Schedule Job" value="{{jobdef}}">
+                  <input type="text" name="schedule">
+                  <input type="submit" class="btn" value="Schedule">
+                  <input type="submit" class="btn" value="UnSchedule">
+                </form>
+              </td>
+            </tr>
+
+            <tr>
+             <td>
+               <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                 <label>Duplicate This Job: </label>
+                 <input type="hidden" name="Job Type" value="{{jobdef}}">
+                 <input type="text" name="New Job">
+                 <input type="submit" class="btn" value="Duplicate">
+               </form>
+               </td>
+            </tr>
+
+            <tr>
+             <td>
+               <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                 <label>Delete the job: </label>
+                 <input type="hidden" name="Delete Job Type" value="{{jobdef}}">
+                 <input type="hidden" name="Mapper">
+                 <input type="submit" class="btn" value="Delete">
+                </form>
+              </td>
+            </tr>
+
+            <tr>
+             <td>
+               <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                 <label>Create New File: </label>
+                 <input type="hidden" name="Job Type" value="{{jobdef}}">
+                 <input type="text" name="New File">
+                 <input type="submit" class="btn" value="Create">
+               </form>
+               </td>
+            </tr>
+
+            <tr>
+              <td>
+                <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                  <label>Input Mapper Count (Default is 5): </label>
+                  <input type="hidden" name="Job Type" value="{{jobdef}}">
+                  <input type="text" name="Mapper">
+                  <input type="submit" class="btn" value="Save">
+                </form>
+              </td>
+            </tr>
+ 
+            <tr>
+             <td>
+               <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                 <label>Test the job: </label>
+                 <input type="hidden" name="Test Job" value="{{jobdef}}">
+                 <input type="submit" class="btn" value="Test">
+               </form> 
+             </td>
+            </tr>
+            <tr>
+             <td>Job Test Result: <a target="_blank" href="http://refine.surfiki.io:8888/test">Click Here to show the testing results</a></td>
+            </tr> 
+            <tr>
+             <td>Job Result Link: <a target="_blank" onClick="window.setTimeout(function(){location.reload()},1000);" href="{{g.jobstreams[jobdef]}}">{{g.jobstreams[jobdef]}}</a> {{g.jobhint[jobdef]}}</td>
+            </tr>
+      
+          </tbody>
+      </table>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+
+

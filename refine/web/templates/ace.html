@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Surfiki Refine{% block title %}{% endblock %}</title>
+  <link rel="icon" type="image/ico" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+  {%  block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/progress.css') }}" type="text/css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="screen" charset="utf-8">
+  {% endblock %}
+  <style type="text/css" media="screen">
+      body {
+        padding-bottom: 0px;
+      }
+      
+      .body {
+        margin: 0px;
+      }
+      
+      .navbar {
+        margin-bottom: 0px;
+      }
+
+      .body div {
+      	overflow: auto;
+      }
+      
+      .hsplitbar {
+      	background: #ccc url({{ url_for('static', filename='img/hgrabber.gif') }}) no-repeat center;
+      	height: 8px;
+      	cursor: e-resize;	/* in case col-resize isn't supported */
+      	cursor: row-resize;
+      }
+      
+      .splitterMask {
+         position:absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         overflow: hidden;
+         background-image: url(/static/img/spacer.gif);
+         z-index: 20000;
+      }
+  </style>
+</head>
+<body>
+  <div class="navbar navbar-top">
+    <div class="navbar-inner">
+      <div class="container pull-right">
+        <ul class="nav">
+          <li class="logo"> <a href="http://www.elasticsearch.org/"><img src="{{ url_for('static', filename='img/elastic-logo.png') }}" style="height: 35px;"></a> </li>
+        </ul>
+      </div>
+      <div class="container">
+        <ul class="nav">
+        <li class="logo"><a href="/"><img src="{{ url_for('static', filename='img/surfiki-logo.png') }}" style="height: 35px;"></a> </li>
+        </ul>
+      </div>
+    </div>
+  
+  <div class="body">
+    <div id="cloud9_holder">
+      <iframe id="cloud9" src="http://refine.surfiki.io:3131{% if g.currentfile %}/#{{g.currentfile}}{% endif %}" style="border: 0; width:130px; height:20px;"></iframe>
+    </div>
+    
+    <div id="sense_holder">
+      <iframe id="sense" src="/sense" style="border: 0; width:130px; height:20px;"></iframe>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}" charset="utf-8"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/splitter.js') }}"></script>
+  <script type="text/javascript">
+  $().ready(function() {
+    var waitForFinalEvent = (function () {
+      var timers = {};
+      return function (callback, ms, uniqueId) {
+        if (!uniqueId) {
+          uniqueId = "Don't call this twice without a uniqueId";
+        }
+        if (timers[uniqueId]) {
+          clearTimeout (timers[uniqueId]);
+        }
+        timers[uniqueId] = setTimeout(callback, ms);
+      };
+    })();
+    
+    function size() {
+      var width = $(window).width();
+      var height = $(window).height();
+
+      $("#cloud9").width(width);
+      $("#cloud9").height(height/2);
+      
+      $("#sense").width(width);
+      $("#sense").height(height/2);
+      
+      $(".body").width(width);
+      $(".body").height(height-60); 
+    }
+    
+    size();
+    $(".body").splitter({type: 'h'});
+  	
+  	$(window).resize(function () {
+      waitForFinalEvent(function(){
+        size();
+        $(".body").trigger("resize"); 
+      }, 500, "reSize");
+    });
+  });
+  </script>
+</body>
+</html>
+

@@ -366,7 +366,8 @@ This assumes you have an Elasticsearch index with keywords and a date field that
 
     	def split_words(self, hits):
         	for hit in hits:
-            	keywords = hit['_source']['YOUR KEYWORD FIELD WITHIN YOUR INDEX']
+            	keywords = hit['_source']['YOUR KEYWORD FIELD WITHIN YOUR INDEX 
+            		COMMA DELIMITED']
             	for word in keywords.split(','):
                 	if len(word.strip()) >= 2:
                     	yield word.strip().strip('.').strip(','), 1
