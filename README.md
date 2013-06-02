@@ -120,15 +120,20 @@ Many thanks go out to Bernardo Heynemann for his excellent work with r3 and c9.i
 
 Supported Operating System: LINUX
 
-Clone Project
+Assume this is a fresh install on a clean Ubuntu Server Dist as root
+
+	$ apt-get update
+	$ apt-get install -y build-essential openssl libssl-dev pkg-config git-core g++ curl libxml2-dev python-dev
+
+Clone Project in to root
  
-    $ sudo git clone https://github.com/intridea/surfiki-refine-elasticsearch.git
+    $ git clone https://github.com/intridea/surfiki-refine-elasticsearch.git
     
 Install redis
 
 	$ cd /usr/local/src
-	$ sudo wget http://redis.googlecode.com/files/redis-2.6.10.tar.gz
-	$ sudo tar -xzf redis-2.6.10.tar.gz
+	$ wget http://redis.googlecode.com/files/redis-2.6.10.tar.gz
+	$ tar -xzf redis-2.6.10.tar.gz
 	$ cd redis-2.6.10/
 
 	$ sudo make
@@ -136,7 +141,8 @@ Install redis
 
 	$ cd utils
 
-	$ sudo ./install_server.sh
+	$ ./install_server.sh
+	
     
 Install Dependencies
 
@@ -156,17 +162,20 @@ The editor portion of Refine uses a specific version of node.js:
 
 Install node.js v0.6.21
 	
-	$ sudo apt-get update
-	$ sudo apt-get install build-essential openssl libssl-dev pkg-config git-core
+	$ apt-get update
 
 	$ cd /usr/local/src
 	$ sudo wget http://nodejs.org/dist/v0.6.21/node-v0.6.21.tar.gz
 	$ sudo tar -xzf node-v0.6.21.tar.gz
 	$ cd node-v0.6.21/
 
-	$ sudo ./configure
-	$ sudo make
-	$ sudo make install
+	$ ./configure
+	$ make
+	$ make install
+	
+Update npm
+
+	$ npm install -g npm
 	
 Install Cloud9 Editor
 
@@ -174,12 +183,12 @@ Install Cloud9 Editor
 	
 	$ npm install -g sm
 
-	Install and build modules 
+	Install and build modules (from the Surfiki Refine Repo on your filesystem)
 	
 	$ cd cloud9
 	$ sm install
 
-	Install cloud9 (from the Surfiki Refine Repo) as an upstart job 
+	Install cloud9 (from the Surfiki Refine Repo on  your filesystem) as an upstart job 
 	
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
