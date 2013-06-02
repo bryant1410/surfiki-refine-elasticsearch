@@ -238,11 +238,11 @@ This assumes you have an Elasticsearch index with keywords and a date field that
 
 
 
-	#FILE: surfiki_DempTemplate_stream.py
-
-
-	#!/usr/bin/python
+	#!/usr/bin/env python
 	# -*- coding: utf-8 -*-
+
+	# FILE: surfiki_DempTemplate_stream.py
+
 
 	from os.path import abspath, dirname, join
 	import httplib
@@ -260,6 +260,8 @@ This assumes you have an Elasticsearch index with keywords and a date field that
 	# Test that __all__ is sufficient:
 	from pyelasticsearch import *
 	from pyelasticsearch.client import es_kwargs
+
+
 	class SurfikiDemoTemplateStream:
     	job_type = 'DemoTemplate'
     	group_size = 20
@@ -269,50 +271,59 @@ This assumes you have an Elasticsearch index with keywords and a date field that
         	# Init the instance for search
         	es = ElasticSearch('YOUR ELASTIC SEARCH ENDPOINT')
         	current = int(round(time.time() * 1000))
-        	# 15 minutes ago 
+        	# 15 minutes ago
         	begin = current - (1000 * 60 * 60) / 4
         	# Query Example
         	query = {
-          	"query": {
+            	"query": {
             	"bool": {
-              	"must": [
+            	"must": [
                 	{
-                  	"range": {
+                    	"range": {
                     	"YOUR INDEX DATE FIELD": {
-                      	"from": begin,
-                      	"to": current
+                    	"from": begin,
+                    	"to": current
                     	}
-                  	}
+                    	}
                 	}
-              	],
-              	"must_not": [],
-              	"should": []
+            	],
+                	"must_not": [],
+                	"should": []
             	}
-          	},
-          	"from": 0,
-          	"size": 100000,
-          	"sort": [],
-          	"facets": {}
+            	},
+            	"from": 0,
+            	"size": 100000,
+            	"sort": [],
+            	"facets": {}
         	}
-        	result = es.search(query, index='YOUR ELASTIC SEARCH INDEX', es_from=0, size=0)
+        	result = es.search(
+            	query,
+            	index='YOUR ELASTIC SEARCH INDEX',
+            	es_from=0,
+            	size=0)
         	# Get the total number of hits, preparing for paging control
         	total = int(str(result['hits']['total']))
         	print total
         	query_res = []
         	# Paging handling using from--size ES Query API
-        	for index in range(0, (total - 1)/batch_size + 1):
-            	result = es.search(query, index='YOUR ELASTIC SEARCH INDEX', es_from=index*batch_size, size=batch_size)
+        	for index in range(0, (total - 1) / batch_size + 1):
+            	result = es.search(
+                	query,
+                	index='YOUR ELASTIC SEARCH INDEX',
+                	es_from=index * batch_size,
+                	size=batch_size)
             	hits = result['hits']['hits']
             	query_res = query_res + hits
         	return query_res
+
         
 ---
 
-	#FILE: surfiki_DemoTemplate_mapper.py
-
-
-	#!/usr/bin/python
+	#!/usr/bin/env python
 	# -*- coding: utf-8 -*-
+
+	# FILE: surfiki_DemoTemplate_mapper.py
+	
 
 	from refine.worker.mapper import Mapper
 	import os
@@ -335,11 +346,12 @@ This assumes you have an Elasticsearch index with keywords and a date field that
 	from pyelasticsearch import *
 	from pyelasticsearch.client import es_kwargs
 
+
 	class SurfikiDemoTemplateMapper(Mapper):
     	job_type = 'DemoTemplate'
-     
+
     	def map(self, hits):
-        	#time.sleep(0.5)
+        	# time.sleep(0.5)
         	print os.getpid()
         	return list(self.split_words(hits))
 
@@ -351,14 +363,15 @@ This assumes you have an Elasticsearch index with keywords and a date field that
                     	yield word.strip().strip('.').strip(','), 1
 
 
+
         
 ---
 
-	#FILE: surfiki_DemoTemplate_reducer.py
-
-
-	#!/usr/bin/python
+	#!/usr/bin/env python
 	# -*- coding: utf-8 -*-
+
+	# FILE: surfiki_DemoTemplate_reducer.py
+
 
 	from collections import defaultdict
 	import nltk
@@ -376,6 +389,7 @@ This assumes you have an Elasticsearch index with keywords and a date field that
 	from pyelasticsearch import *
 	from pyelasticsearch.client import es_kwargs
 
+
 	class SurfikiDemoTemplateReducer:
     	job_type = 'DemoTemplate'
 
@@ -386,7 +400,8 @@ This assumes you have an Elasticsearch index with keywords and a date field that
         	for line in items:
             	for word, frequency in line:
                 	word_freq[word] += frequency
-        	# Write word_freq values to a test index (EXAMPLE WHERE RESULTS ARE ADDED TO AN ELASTIC INDEX)
+        	# Write word_freq values to a test index (EXAMPLE WHERE RESULTS ARE
+        	# ADDED TO AN ELASTIC INDEX)
         	for word in word_freq:
             	key = {}
             	key['name'] = word
@@ -398,12 +413,14 @@ This assumes you have an Elasticsearch index with keywords and a date field that
         
 ---
 
-	#FILE: surfiki_DemoTemplate_reducer.py
 	
 	#!/usr/bin/python
 	# -*- coding: utf-8 -*-
+	
+	#FILE: app_config.py
 
-	#DescDemonstration Job Template
+
+	# DescDemonstration Job Template
 	INPUT_STREAMS = [
     	'DemoTemplate.surfiki_DemoTemplate_stream.SurfikiDemoTemplateStream']
 	REDUCERS = [
