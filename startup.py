@@ -33,12 +33,12 @@ def run_job(jobtype):
     os.popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+'1 --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR &')
 
 os.popen('python refine/web/server.py --redis-port=7778 --redis-pass=surfikiMR --config-file=./refine/web/config.py &')
-#f = open("/var/spool/cron/crontabs/root")
-#for line in f.readlines():
-    #line = str(line.strip('\n'))
-    #if "XGET" in line:
-        #lines = line.split("/")
-        #last = lines[len(lines) - 1]
-        #jobtype = last[0:last.index('.')]
-        #run_job(jobtype)
-#f.close()
+f = open("/var/spool/cron/crontabs/root")
+for line in f.readlines():
+    line = str(line.strip('\n'))
+    if "XGET" in line:
+        lines = line.split("/")
+        last = lines[len(lines) - 1]
+        jobtype = last[0:last.index('.')]
+        run_job(jobtype)
+f.close()
