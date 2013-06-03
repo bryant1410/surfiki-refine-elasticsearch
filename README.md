@@ -128,8 +128,7 @@ Assume this is a fresh install on a clean Ubuntu Server Dist as root
 Clone Project in to root (/root/)
  
     $ cd root
-    $ git clone https://github.com/intridea/surfiki-refine-elasticsearch.git root
-    $ mv surfiki-refine-elasticsearch refine
+    $ git clone https://github.com/intridea/surfiki-refine-elasticsearch.git refine
     
 Install redis
 
