@@ -181,14 +181,10 @@ Update npm
 	
 Install Cloud9 Editor
 
-	Install source mint globally
-	
-	$ npm install -g sm
-
 	Install and build modules (from the Surfiki Refine Repo on your filesystem)
 	
 	$ cd cloud9
-	$ sm install
+	$ npm install
 
 	Install cloud9 (from the Surfiki Refine Repo on  your filesystem) as an upstart job 
 	
