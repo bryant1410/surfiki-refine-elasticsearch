@@ -4,7 +4,7 @@
 DEBUG = True
 SECRET_KEY = 'development key'
 
-WEB_HOST = 'refine.surfiki.io'
+WEB_HOST = 'localhost'
 WEB_PORT = 8888
 UPLOAD_FOLDER = '/surfiki-refine-elasticsearch/jobs/refine/'
 
