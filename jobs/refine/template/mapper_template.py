@@ -1,5 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 
 from refine.worker.mapper import Mapper
 import os
@@ -22,17 +23,18 @@ import time
 from pyelasticsearch import *
 from pyelasticsearch.client import es_kwargs
 
+
 class CLASSNAME(Mapper):
     job_type = 'JOBTYPE'
-     
+
     def map(self, hits):
-        #time.sleep(0.5)
+        # time.sleep(0.5)
         print os.getpid()
         return list(self.split_words(hits))
 
     def split_words(self, hits):
         for hit in hits:
-            keywords = hit['_source']['strKeywords']
+            keywords = hit['_source']['YOUR KEYWORD FIELD WITHIN YOUR INDEX']
             for word in keywords.split(','):
                 if len(word.strip()) >= 2:
                     yield word.strip().strip('.').strip(','), 1

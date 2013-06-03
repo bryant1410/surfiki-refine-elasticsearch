@@ -1,5 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 
 from collections import defaultdict
 import nltk
@@ -17,12 +18,13 @@ import time
 from pyelasticsearch import *
 from pyelasticsearch.client import es_kwargs
 
+
 class CLASSNAME:
     job_type = 'JOBTYPE'
 
     def reduce(self, app, items):
         # Init the instance for search
-        es = ElasticSearch('http://api.surfiki.io/search/')
+        es = ElasticSearch('YOUR ELASTIC SEARCH ENDPOINT')
         word_freq = defaultdict(int)
         for line in items:
             for word, frequency in line:
@@ -32,5 +34,5 @@ class CLASSNAME:
             key = {}
             key['name'] = word
             key['count'] = word_freq[word]
-            es.index("test", "jdbc", key)
+            es.index("YOUR NEW INDEX", "YOUR NEW INDEX", key)
         return word_freq

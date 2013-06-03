@@ -1,5 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+
 from refine.worker.mapper import Mapper
 import os
 import urllib
@@ -19,15 +21,18 @@ from pyelasticsearch.client import es_kwargs
 from surfiki_JOBTYPE_stream import SurfikiJOBTYPEStream
 from surfiki_JOBTYPE_reducer import SurfikiJOBTYPEReducer
 
+
 class SurfikiJOBTYPEMapper():
     job_type = 'JOBTYPE'
     MAPPER_CONTENT
+
+
 def main():
     start = time.time()
     hits = SurfikiJOBTYPEStream().process(None, None)
     print "input stream took %.2f" % (time.time() - start)
-    #for hit in hits:
-                #print hit['_source']['strKeywords']
+    # for hit in hits:
+                # print hit['_source']['strKeywords']
     start = time.time()
     mapper = SurfikiJOBTYPEMapper()
     results = []
