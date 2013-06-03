@@ -6,7 +6,7 @@ from watchdog.events import FileSystemEventHandler
 if __name__ == "__main__":
     class RefineEventHandler(FileSystemEventHandler):
         def onChangeMapper(self, jobtype):
-            upload_foloder = '/root/refine/jobs/refine/'
+            upload_foloder = '/surfiki-refine-elasticsearch/jobs/refine/'
             filename = os.path.join(upload_foloder + jobtype, 'test_' + jobtype + '.py').encode("ascii")
             template = open(upload_foloder + "template/test_template.py").read()
             template = template.replace("JOBTYPE", jobtype)
@@ -32,7 +32,7 @@ if __name__ == "__main__":
                 self.onChangeMapper(job)
     event_handler = RefineEventHandler()
     observer = Observer()
-    observer.schedule(event_handler, path='/root/refine/jobs/refine/', recursive=True)
+    observer.schedule(event_handler, path='/surfiki-refine-elasticsearch/jobs/refine/', recursive=True)
     observer.start()
     try:
         while True:

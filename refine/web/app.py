@@ -521,7 +521,7 @@ def start():
         if 'Kill' in request.form:
             jobkill = request.form['Kill']
             # Run kill job scripts to find all the processed related with this job, and kill them
-            os.popen('/root/refine/kill_job.sh ' + jobkill)
+            os.popen('/surfiki-refine-elasticsearch/kill_job.sh ' + jobkill)
             stopJob(jobkill)
             app.db.connection.set(JOB_STATUS_KEY % jobkill, "INACTIVE")
             return redirect("%s%s" % (url_for('index'), "#tab-jobs"))
@@ -556,7 +556,7 @@ def start():
         classone = None
         classtwo = None
         # before start, kill it first
-        os.popen('/root/refine/kill_job.sh ' + jobtype)
+        os.popen('/surfiki-refine-elasticsearch/kill_job.sh ' + jobtype)
         #remove_all_jobs(jobtype)
         stopJob(jobtype)
         # Traverse all the files under this job, finding the mapper file, and retrieve the mapper class name
@@ -570,10 +570,10 @@ def start():
         classone = filename[:-3]
         mapperclass = classone+"."+classtwo
         # Start the App in backgorund process
-        subprocess.Popen('python refine/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
+        subprocess.Popen('python surfiki-refine-elasticsearch/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
         # Start all the mappers in background process
         for num in range(1, int(counts)+1):
-            subprocess.Popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR', shell=True,stdout=PIPE)
+            subprocess.Popen('python surfiki-refine-elasticsearch/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR', shell=True,stdout=PIPE)
         app.db.connection.set(JOB_STATUS_KEY % jobtype, "IDLE")
         #return redirect("http://SurfikiMRM.surfiki.io:"+job_port(jobtype)+"/stream/" + jobtype)
         #return render_template('run_job.html')

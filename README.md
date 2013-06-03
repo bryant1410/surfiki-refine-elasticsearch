@@ -193,7 +193,7 @@ Install Cloud9 Editor
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
 	
-Configure Surfiki Refine
+Configure Surfiki Refine (Or leave as configured below)
 
 	Edit /refine/web/config.py
 	
@@ -205,7 +205,7 @@ Configure Surfiki Refine
 
 	WEB_HOST = 'URL'
 	WEB_PORT = 8888
-	UPLOAD_FOLDER = '/root/refine/jobs/refine/'
+	UPLOAD_FOLDER = '/refine/jobs/refine/'
 
 	REDIS_HOST = 'localhost'
 	REDIS_PORT = 7778

@@ -1,7 +1,7 @@
 #!/bin/bash
 pkill python
 redis-cli -p 7778 -a surfikiMR  KEYS "*" | xargs redis-cli -p 7778 -a surfikiMR DEL
-for file in `ls /root/refine/jobs/refine`
+for file in `ls /surfiki-refine-elasticsearch/jobs/refine`
 do
   if [[ "$file" != template ]]; then
     echo $file
