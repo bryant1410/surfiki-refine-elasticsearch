@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('/root/refine/app/app.py')
-
 import os
 from os.path import abspath, isabs, join
 import logging
