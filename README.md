@@ -205,7 +205,7 @@ Configure Surfiki Refine (Or leave as configured below)
 
 	WEB_HOST = 'URL'
 	WEB_PORT = 8888
-	UPLOAD_FOLDER = '/refine/jobs/refine/'
+	UPLOAD_FOLDER = '/surfiki-refine-elasticsearch/jobs/refine/'
 
 	REDIS_HOST = 'localhost'
 	REDIS_PORT = 7778
