@@ -203,7 +203,7 @@ Configure Surfiki Refine (Or leave as configured below)
 	DEBUG = True
 	SECRET_KEY = 'development key'
 
-	WEB_HOST = 'URL'
+	WEB_HOST = 'localhost'
 	WEB_PORT = 8888
 	UPLOAD_FOLDER = '/surfiki-refine-elasticsearch/jobs/refine/'
 

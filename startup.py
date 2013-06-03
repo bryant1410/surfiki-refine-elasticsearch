@@ -29,10 +29,10 @@ def run_job(jobtype):
     classone = filename[:-3]
     mapperclass = classone+"."+classtwo
     # Start the App in backgorund process
-    os.popen('python surfiki-refine-elasticsearch/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py &')
-    os.popen('python surfiki-refine-elasticsearch/worker/mapper.py --mapper-key=map-key-'+jobtype+'1 --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR &')
+    os.popen('python refine/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py &')
+    os.popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+'1 --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR &')
 
-os.popen('python surfiki-refine-elasticsearch/web/server.py --redis-port=7778 --redis-pass=surfikiMR --config-file=./surfiki-refine-elasticsearch/web/config.py &')
+os.popen('python refine/web/server.py --redis-port=7778 --redis-pass=surfikiMR --config-file=./refine/web/config.py &')
 f = open("/var/spool/cron/crontabs/root")
 for line in f.readlines():
     line = str(line.strip('\n'))

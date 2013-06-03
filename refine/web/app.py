@@ -570,10 +570,10 @@ def start():
         classone = filename[:-3]
         mapperclass = classone+"."+classtwo
         # Start the App in backgorund process
-        subprocess.Popen('python surfiki-refine-elasticsearch/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
+        subprocess.Popen('python refine/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
         # Start all the mappers in background process
         for num in range(1, int(counts)+1):
-            subprocess.Popen('python surfiki-refine-elasticsearch/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR', shell=True,stdout=PIPE)
+            subprocess.Popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR', shell=True,stdout=PIPE)
         app.db.connection.set(JOB_STATUS_KEY % jobtype, "IDLE")
         #return redirect("http://SurfikiMRM.surfiki.io:"+job_port(jobtype)+"/stream/" + jobtype)
         #return render_template('run_job.html')
