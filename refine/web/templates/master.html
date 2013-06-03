@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Surfiki Refine{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/ico" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-responsive.min.css') }}" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/progress.css') }}" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lookout.css') }}" type="text/css" media="screen" charset="utf-8">
+    <style type="text/css" media="screen">
+        #editor { 
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        } 
+    </style>
+    {%  block css %}
+    {% endblock %}
+</head>
+<body>
+  <div class="navbar navbar-top">
+    <div class="navbar-inner">
+      <div class="container pull-right">
+        <ul class="nav">
+          <li class="logo"> <a href="http://www.elasticsearch.org/"><img src="{{ url_for('static', filename='img/elastic-logo.png') }}" style="height: 35px;"></a> </li>
+        </ul>
+      </div>
+      <div class="container">
+        <ul class="nav">
+        <li class="logo"><a href="/"><img src="{{ url_for('static', filename='img/surfiki-logo.png') }}" style="height: 35px;"></a> </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container infobox">
+        <p>Service Status: {{ g.server['surfikiMR_service_status'] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Active Mappers: {{ g.mappers|count }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Available Job Types: {{ g.job_types|count }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Running on {{ g.config['WEB_HOST'] }}:{{ g.config['WEB_PORT'] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connected to Redis on {{ g.config['REDIS_HOST'] }}:{{ g.config['REDIS_PORT'] }}</p> <Br/>
+        
+        <div class="row">
+          <div class="span2">
+            <div class="module nograph">
+        			<div class="title">Responses/errors</div>
+        			<div class="value" id="requests"></div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module yesgraph">
+        			<div class="title">Latency</div>
+        			<div class="value" id="latency"></div>
+        			<div class="graph">
+        				<canvas id="c_latency" width="120" height="56">
+        				</canvas>
+        			</div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module yesgraph">
+        			<div class="title">CPU</div>
+        			<div class="value" id="cpuusage"></div>
+        			<div class="graph">
+        				<canvas id="c_cpuusage" width="120" height="56">
+        				</canvas>
+        			</div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module yesgraph">
+        			<div class="title">RAM</div>
+        			<div class="value" id="ramusage"></div>
+        			<div class="graph">
+        				<canvas id="c_ramusage" width="120" height="56">
+        				</canvas>
+        			</div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module twovalues">
+        			<div class="title">Disk reads/writes</div>
+        			<div class="value" id="diskr"></div>
+        			<div class="value" id="diskw"></div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module yesgraph">
+        			<div class="title">Disk read</div>
+        			<div class="value" id="diskrs"></div>
+        			<div class="graph">
+        				<canvas id="c_diskrs" width="120" height="56">
+        				</canvas>
+        			</div>
+        		</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span2">
+            <div class="module yesgraph">
+        			<div class="title">Disk write</div>
+        			<div class="value" id="diskws"></div>
+        			<div class="graph">
+        				<canvas id="c_diskws" width="120" height="56">
+        				</canvas>
+        			</div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module twovalues">
+        			<div class="title">Disk used/total</div>
+        			<div class="value" id="disku"></div>
+        			<div class="value" id="diskt"></div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module twovalues">
+        			<div class="title">Network TX/RX</div>
+        			<div class="value" id="nett"></div>
+        			<div class="value" id="netr"></div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module yesgraph">
+        			<div class="title">Net TX</div>
+        			<div class="value" id="netts"></div>
+        			<div class="graph">
+        				<canvas id="c_netts" width="120" height="56">
+        				</canvas>
+        			</div>
+        		</div>
+          </div>
+          <div class="span2">
+            <div class="module yesgraph">
+        			<div class="title">Net RX</div>
+        			<div class="value" id="netrs"></div>
+        			<div class="graph">
+        				<canvas id="c_netrs" width="120" height="56">
+        				</canvas>
+        			</div>
+        		</div>
+          </div>
+          <div class="span2">
+          	<div class="module yesgraph">
+        			<div class="title">Swap</div>
+        			<div class="value" id="swapusage"></div>
+        			<div class="graph">
+        				<canvas id="c_swapusage" width="120"
+        					height="56"></canvas>
+        			</div>
+        		</div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  
+  <div class="content container">
+    <div class="row">
+      <div class="span12">
+
+        <div class="tabbable body">
+          <ul class="nav nav-tabs" id="tabnav">
+            <li class="active"><a href={% if "index" == request.endpoint %}"#main" data-toggle="tab"{% else %}"/#tab-main"{% endif %}>Jobs In Progress</a></li>
+            <li><a href={% if "index" == request.endpoint %}"#jobs" data-toggle="tab"{% else %}"/#tab-jobs"{% endif %}>Jobs</a></li>
+            <li><a href={% if "index" == request.endpoint %}"#details" data-toggle="tab"{% else %}"/#tab-details"{% endif %}>Details</a></li>
+            <li><a href={% if "index" == request.endpoint %}"#elastic" data-toggle="tab"{% else %}"/#tab-elastic"{% endif %}>Elasticsearch</a></li>
+            <li><a href={% if "index" == request.endpoint %}"#configuration" data-toggle="tab"{% else %}"/#tab-configuration"{% endif %}>Configuration</a></li>
+          </ul>
+          
+          {% block body %}
+          {% endblock %}
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  <div id="footer" class="navbar">
+    <div class="navbar-inner">
+      <a href="http://www.intridea.com" class="brand"><img alt="Intridea, Inc." src="{{ url_for('static', filename='img/intridea_logo.png') }}" style="height: 35px;padding: 5px 50px 5px 15px;"></a>
+      <ul class="nav hidden-phone">
+        <li><a href="http://www.intridea.com">&copy; 2013 Intridea, Inc.</a></li>
+        <li><a href="http://www.intridea.com">www.intridea.com</a></li>
+        <li><a href="http://www.surfiki.com/contact">Contact</a></li>
+        <li><a href="http://twitter.com/intridea">Twitter</a></li>
+        <li><a href="http://facebook.com/intridea">Facebook</a></li>
+      </ul> 
+    </div> 
+  </div> 
+  
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}" charset="utf-8"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}" charset="utf-8"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/progress.js') }}" charset="utf-8"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/smoothie.js') }}" charset="utf-8"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}" charset="utf-8"></script>
+
+  {% block js %}
+  {% endblock %}
+</body>
+</html>

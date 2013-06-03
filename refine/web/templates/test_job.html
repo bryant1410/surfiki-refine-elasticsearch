@@ -1,0 +1,10 @@
+<head>
+  <meta http-equiv="refresh" content="5">
+</head>
+{% block title %} - Test Job Results{% endblock %}
+
+{% block body %}
+<p>{% for line in g.currenttestresult.split("\n") %}
+  <br>{{line}} </br>
+{% endfor %}</p>
+{% endblock %}

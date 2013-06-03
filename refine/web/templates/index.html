@@ -1,0 +1,313 @@
+{% extends "master.html" %}
+
+{% block title %} {% endblock %}
+{% block js %}
+<script type="text/javascript">
+$().ready(function() {
+  $('a[data-toggle="tab"]').on('shown', function (e) {
+    if ($(e.target).attr("href") == "#elastic") {
+      var paramedic = $("#paramedic");
+      paramedic.attr("src", "{{ url_for('static', filename='paramedic/index.html') }}");
+      setTimeout(function (){
+        paramedic.height(paramedic.contents().height());
+        setInterval(function (){
+          paramedic.height(paramedic.contents().height());
+        }, 5000);
+      }, 1000);
+    }
+  });
+  
+  var tab = window.location.hash.substring(5);
+  $('#tabnav a[href="#' + tab + '"]').tab('show');
+  
+  $(".job_toggle").click(function() {
+    $("#"+$(this).data("id")).toggle();
+    return false;
+  });
+});
+</script>
+{% endblock %}
+
+{% block body %}
+
+{% if failed_warning %}
+<div class="notice">
+    <div class="alert alert-error">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        Some messages have failed. <a href="/failed" class="failed">Click here</a> to take action.
+    </div>
+</div>
+{% endif %}
+
+<div class="tab-content">
+    <div class="tab-pane active" id="main">
+    <div class="mappers section">
+        <h1>Mappers</h1>
+
+        <table class="mappers-table table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="mapper-name">Name</th>
+                    <th class="working">Working on</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mapper, status in g.mappers.iteritems() %}
+                <tr>
+                    <td>{{ mapper }}</td>
+                    {% if status %}
+                    <td>Processing job {{ status }}</td>
+                    {% else %}
+                    <td>Waiting for a new job...</td>
+                    {% endif %}
+                </tr>
+                {% else %}
+                <tr>
+                    <td class="no-mappers" colspan="2">No mappers registered so far...</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="current-jobs section">
+        <h1>Jobs in Progress</h1>
+
+        {% for job_type in g.job_types %}
+        <h2>{{ job_type }}</h2>
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="job-id-col">Job ID</th>
+                    <th width="20%">Phase</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in g.jobs[job_type] %}
+                <tr>
+                    <td>{{ job }}</td>
+                    <td>{{g.jobstatus[job_type]}}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td>None</td>
+                    <td>{{g.jobstatus[job_type]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <table class="no-jobs table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="job-id-col">Job ID</th>
+                    <th width="20%">Phase</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2" class="no-jobs">None</td>
+                </tr>
+            </tbody>
+        </table>
+        {% endfor %}    
+    </div>
+    </div>
+    
+    <div class="tab-pane" id="jobs">
+      <div style="padding: 5px 0px 15px 0px">
+        <a class="btn" href="/upload" alt="upload">Create New Job</a>
+      </div>
+      <form class="form-inline" style="margin-bottom: 20px" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+        <label>Input the job name : </label>
+        <input type="text" name="Kill">
+        <input class="btn" type="submit" value="Kill Job">
+      </form>    
+      {% for jobdef in g.jobsdef.keys() %}
+          <div class="well well-small"><div class="pull-right">Phase: {{g.jobstatus[jobdef]}}</div><h4 style="line-height: 0px; font-weight: normal"><a class="job_toggle" data-id="id_{{ jobdef }}" href="#"><strong>{{ jobdef }}</strong> - {{g.jobsdesc[jobdef]}}</a></h4></div>
+          <table id="id_{{ jobdef }}" class="mappers-table table table-striped table-bordered hide">
+              <thead>
+              <tr>
+                <th class="action">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr>
+                <td>
+                  <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                    <label>Code: </label>
+                    <input type="hidden" name="Job Type" value="{{jobdef}}">
+                    <input type="hidden" name="Filename" value="{% for files in g.jobsdef.get(jobdef) %}{{files}}|{% endfor %}">
+                    <input type="submit" class="btn" name="Edit" value="Edit">
+                  </form>
+                </td>
+              </tr>
+
+              <tr>
+               <td>
+                 <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                   <label>Job Description: {{g.jobsdesc[jobdef]}} </label>
+                   <input type="hidden" name="Job Type" value="{{jobdef}}">
+                   <input type="text" name="Description">
+                   <input type="submit" class="btn" value="Change Description">
+                  </form>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                    <label>Job Schedule (crontab format): {{g.jobschedules[jobdef]}} </label>
+                    <input type="hidden" name="Schedule Job" value="{{jobdef}}">
+                    <input type="text" name="schedule">
+                    <input type="submit" class="btn" value="Schedule">
+                    <input type="submit" class="btn" value="UnSchedule">
+                  </form>
+                </td>
+              </tr>
+
+              <tr>
+               <td>
+                 <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                   <label>Duplicate This Job: </label>
+                   <input type="hidden" name="Job Type" value="{{jobdef}}">
+                   <input type="text" name="New Job">
+                   <input type="submit" class="btn" value="Duplicate">
+                 </form>
+                 </td>
+              </tr>
+
+              <tr>
+               <td>
+                 <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                   <label>Delete the job: </label>
+                   <input type="hidden" name="Delete Job Type" value="{{jobdef}}">
+                   <input type="hidden" name="Mapper">
+                   <input type="submit" class="btn" value="Delete">
+                  </form>
+                </td>
+              </tr>
+
+              <tr>
+               <td>
+                 <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                   <label>Create New File: </label>
+                   <input type="hidden" name="Job Type" value="{{jobdef}}">
+                   <input type="text" name="New File">
+                   <input type="submit" class="btn" value="Create">
+                 </form>
+                 </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                    <label>Input Mapper Count (Default is 5): </label>
+                    <input type="hidden" name="Job Type" value="{{jobdef}}">
+                    <input type="text" name="Mapper">
+                    <input type="submit" class="btn" value="Set/Save (Required)">
+                  </form>
+                </td>
+              </tr>
+
+              <tr>
+               <td>
+                 <form class="form-inline" action="{{ url_for('start') }}" method="post" enctype="multipart/form-data">
+                   <label>Test the job: </label>
+                   <input type="hidden" name="Test Job" value="{{jobdef}}">
+                   <input type="submit" class="btn" value="Enable Test">
+                 </form>
+               </td>
+              </tr>
+
+              <tr>
+               <td>Job Test Result Link: <a target="_blank" href="{{g.jobtestlinks[jobdef]}}">{{g.jobtestlinks[jobdef]}}</a> {{g.jobtesthints[jobdef]}}</td>
+              </tr>
+              <tr>
+               <td>Job Result Link: <a target="_blank" onClick="window.setTimeout(function(){location.reload()},1000);" href="{{g.jobstreams[jobdef]}}">{{g.jobstreams[jobdef]}}</a> {{g.jobhint[jobdef]}}</td>
+              </tr>
+
+            </tbody>
+        </table>
+      {% endfor %}
+    </div>
+
+
+    <div class="tab-pane" id="details">
+      <h2>keys owned by Surfiki Refine</h2>
+      <h3>(All keys are prefixed with "surfiki:")</h3>
+
+      <table class="keys table table-striped table-bordered table-condensed">
+          <thead>
+              <tr>
+                  <th>key name</th>
+                  <th class="type-col">type</th>
+                  <th>size</th>
+                  <th></th>
+              </tr>
+          </thead>
+
+          <tbody>
+              {% for key in keys %}
+              <tr>
+                  <td><a href="/stats/keys/{{ key['name'] }}">{{ key['name'] }}</a></td>
+                  <td><a href="/stats/keys/{{ key['name'] }}">{{ key['type'] }}</a></td>
+                  <td><a href="/stats/keys/{{ key['name'] }}">{{ key['size'] }}</a></td>
+                  <td class="delete"><a href="/stats/keys/{{ key['name'] }}/delete" class="delete btn btn-small btn-danger">delete</a></td>
+              </tr>
+              {% else %}
+              <tr>
+                  <td class="no-keys" colspan="3">No keys owned by Surfiki Refine</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    
+    <div class="tab-pane" id="elastic">
+      <iframe id="paramedic" src="" style="border: 0; width:100%;"></iframe>
+    </div>
+    
+    <div class="tab-pane" id="configuration">
+      {% if success %}
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Your settings have been saved.
+      </div>
+      {% endif %}
+
+      <form class="form-horizontal" action="{{ url_for('configuration') }}" method="post" enctype="multipart/form-data">
+        <div class="control-group">
+          <label class="control-label" for="nodes">Nodes</label>
+          <div class="controls">
+            <span class="label label-info">If you are interested in the distributed version of Refine, please contact Intridea</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="endpoint">Elasticsearch Endpoint</label>
+          <div class="controls">
+            <input type="text" id="endpoint" name="endpoint" value="{{ endpoint }}">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <button type="submit" class="btn">Save</button>
+          </div>
+        </div>
+      </form>
+
+      <h2>Redis Configuration for Refine</h2>
+
+      <table class="redis table table-striped table-bordered table-condensed">
+          <tbody>
+              {% for key, value in info.items() %}
+              <tr>
+                  <td class="key">{{ key }}</td>
+                  <td class="value">{{ value }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    </div>
+</div>
+{% endblock %}

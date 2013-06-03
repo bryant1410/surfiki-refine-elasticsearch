@@ -125,9 +125,11 @@ Assume this is a fresh install on a clean Ubuntu Server Dist as root
 	$ apt-get update
 	$ apt-get install -y build-essential openssl libssl-dev pkg-config git-core g++ curl libxml2-dev python-dev
 
-Clone Project in to root
+Clone Project in to root (/root/)
  
-    $ git clone https://github.com/intridea/surfiki-refine-elasticsearch.git
+    $ cd root
+    $ git clone https://github.com/intridea/surfiki-refine-elasticsearch.git root
+    $ mv surfiki-refine-elasticsearch refine
     
 Install redis
 
@@ -205,7 +207,7 @@ Configure Surfiki Refine (Or leave as configured below)
 
 	WEB_HOST = 'localhost'
 	WEB_PORT = 8888
-	UPLOAD_FOLDER = '/surfiki-refine-elasticsearch/jobs/refine/'
+	UPLOAD_FOLDER = '/refine/jobs/refine/'
 
 	REDIS_HOST = 'localhost'
 	REDIS_PORT = 7778
