@@ -122,12 +122,32 @@ Supported Operating System: LINUX
 
 Assume this is a fresh install on a clean Ubuntu Server Dist as root
 
+Create a root user
+
+	$ sudo passwd root
+
+Create a crontab file for root user (Since this is assuming a fresh ubuntu install, there is no crontab for root. We need to create one as Surfiki refine will look for it upon startup for job scheduling. If you already have a root crontab file, then disregard.)
+
+	To Check if you have a contrab for root already existing:
+	
+	$ crontab -l
+	# If you are shown a list of entries then you have a crontab for root. Otherwise, continue below:
+
+	$ select-editor
+	# Select number 2 option -> nano
+	$ crontab -e
+	# Enter: @yearly /ls -al
+	# Save the file
+	
+
+Update and install packages
+
 	$ apt-get update
 	$ apt-get install -y build-essential openssl libssl-dev pkg-config git-core g++ curl libxml2-dev python-dev
 
 Clone Project in to root (/root/)
  
-    $ cd root
+    $ cd root (If not alredy there)
     $ git clone https://github.com/intridea/surfiki-refine-elasticsearch.git refine
     
 Install redis
