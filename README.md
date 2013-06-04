@@ -1,6 +1,6 @@
 ##Surfiki Refine for Elasticsearch (Non Distributed Version)
 
-- If you are interested in the distributed version of Refine, please contact [Intridea](http://www.intridea.com).
+- If you are interested in the distributed version of Refine, please contact [Intridea](http://www.intridea.com). As well, Intridea offers cloud hosted options for Refine. Please reach out to us anytime so we can help!
 
 
 ###Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
@@ -83,7 +83,7 @@ Technically, Refine is Map-Reduce, which for each job you define incorporates:
 
 
 - Given a collection of results, you can use Refine to further score each result against a series of 
-validation criteria such as geographic region or category.
+validation criteria; such as geographic region or category data.
 
 
 - Need text to appear in various ways, before it can be processed further? Use Refine to prepend suffixes or concatenate strings, and dynamically add these as new attributes.
@@ -120,7 +120,7 @@ Many thanks go out to Bernardo Heynemann for his excellent work with r3 and c9.i
 
 Supported Operating System: LINUX
 
-Assume this is a fresh install on a clean Ubuntu Server Dist as root
+Assume this is a fresh install on a clean [Ubuntu Server Distribution](http://www.ubuntu.com/download/server) as root
 
 Create a root user
 
