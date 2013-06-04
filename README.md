@@ -126,17 +126,18 @@ Create a root user
 
 	$ sudo passwd root
 
-Create a crontab file for root user (Since this is assuming a fresh ubuntu install, there is no crontab for root. We need to create one as Surfiki refine will look for it upon startup for job scheduling. If you already have a root crontab file, then disregard.)
+Create a crontab file for root user (Since this is assuming a fresh ubuntu install, there is no crontab for root. We need to create one as Surfiki Refine will look for it upon startup for job scheduling. If you already have a root crontab file, then disregard.)
 
-	To Check if you have a contrab for root already existing:
+	To Check if you have a crontab for root already existing:
 	
 	$ crontab -l
 	# If you are shown a list of entries then you have a crontab for root. Otherwise, continue below:
 
 	$ select-editor
-	# Select number 2 option -> nano
+	# Select number 2 option-> nano
+	
 	$ crontab -e
-	# Enter: @yearly /ls -al
+	# Enter (on any line): @yearly /ls -al
 	# Save the file
 	
 
