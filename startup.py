@@ -1,4 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 import os
 from os.path import abspath, dirname, join
 import httplib
@@ -15,7 +18,7 @@ def job_port(type):
         val = line.split("=")[1]
         if (key == type):
           res = val
-    f.close()      
+    f.close()
     return res
 
 def run_job(jobtype):

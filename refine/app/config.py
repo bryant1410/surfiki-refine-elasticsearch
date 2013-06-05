@@ -1,5 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 
 from os.path import isabs, abspath
 import imp

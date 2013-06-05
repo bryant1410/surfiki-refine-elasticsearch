@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import time
 import os
 from watchdog.observers import Observer
@@ -18,7 +21,7 @@ if __name__ == "__main__":
             file.close()
 
         def on_created(self, event):
-            print "on_created:: " + event.src_path 
+            print "on_created:: " + event.src_path
         def on_moved(self, event):
             print "on_moved:: " + event.src_path + "  " + event.dest_path
         def on_deleted(self, event):

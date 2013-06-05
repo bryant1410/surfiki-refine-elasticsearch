@@ -1,5 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import os, subprocess
 import shutil
 import re
@@ -11,7 +12,7 @@ from tornado.wsgi import WSGIContainer
 
 from flask import Flask, render_template, g, redirect, request, url_for
 from ujson import loads
-from subprocess import * 
+from subprocess import *
 from functools import wraps
 from flask import request, Response
 from werkzeug import secure_filename
@@ -50,7 +51,7 @@ def update_desc(type, desc):
     f = open(filename, "w")
     for line in newlines:
         f.write(line)
-    f.close() 
+    f.close()
 
 def job_schedule(type):
     f = open("/var/spool/cron/crontabs/root")
@@ -105,7 +106,7 @@ def job_port(type):
         val = line.split("=")[1]
         if (key == type):
           res = val
-    f.close()      
+    f.close()
     return res
 
 
@@ -114,8 +115,8 @@ def remove_port(type):
     lines = f.readlines()
     newLines = []
     for line in lines:
-        key = line.split("=")[0]   
-        val = line.split("=")[1]   
+        key = line.split("=")[0]
+        val = line.split("=")[1]
         if (key == type):
             continue
         else:
@@ -125,7 +126,7 @@ def remove_port(type):
     for line in newLines:
         f.write(line)
     f.close()
-    
+
 def new_port(type):
     f = open("port.config", "r")
     lines = f.readlines()
@@ -139,10 +140,10 @@ def new_port(type):
     if "\n" in lines[-1]:
         f.write(type.encode("ascii")+ "=" + str(val))
     else:
-        f.write("\n" + type.encode("ascii")+ "=" + str(val))   
+        f.write("\n" + type.encode("ascii")+ "=" + str(val))
     f.close()
 
-    
+
 def allowed_file(filename):
     return '.' in filename and \
        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -168,7 +169,7 @@ def before_request():
     g.jobtesthints = get_all_test_hints(g.job_types)
     g.mappers = get_mappers()
     g.currentfile = get_current_file()
-    g.currentcontent = get_current_file_content()    
+    g.currentcontent = get_current_file_content()
     #g.currenttestresult = get_current_job_testing_results()
     g.currenttestresult = ""
     g.jobtestlinks = get_all_test_link(g.job_types)
@@ -214,8 +215,8 @@ def get_all_status(job_types):
     for job_type in job_types:
         status = app.db.connection.get(JOB_STATUS_KEY % job_type)
         all_status[job_type] = status
-    return all_status 
- 
+    return all_status
+
 def get_alll_job_streams():
     all_streams = {}
     for jobdef in g.jobsdef:
@@ -300,7 +301,7 @@ def index():
             has_errors = True
 
     flush_dead_mappers(app.db.connection, MAPPERS_KEY, LAST_PING_KEY)
-    
+
     key_names = app.db.connection.keys(ALL_KEYS)
 
     keys = []
@@ -333,28 +334,28 @@ def ace():
         if 'mapper' in filename:
             jobtype = filename.split('_')[1]
             makeTestFile(jobtype)
-        return redirect(url_for('start')) 
+        return redirect(url_for('start'))
     return render_template('ace.html')
 
 def duplicateJob(old, new):
     if os.path.exists(app.config['UPLOAD_FOLDER'] + new):
         return
-    new_port(new) 
+    new_port(new)
     call(["mkdir", app.config['UPLOAD_FOLDER'] + new])
-    #call(["cp", "-r", ddapp.config['UPLOAD_FOLDER'] + old + "/*", app.config['UPLOAD_FOLDER'] + new]) 
+    #call(["cp", "-r", ddapp.config['UPLOAD_FOLDER'] + old + "/*", app.config['UPLOAD_FOLDER'] + new])
     subprocess.call("cp -r " + app.config['UPLOAD_FOLDER'] + old + "/* " + app.config['UPLOAD_FOLDER'] + new, shell=True)
-    call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + old + ".py", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + new + ".py"])    
+    call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + old + ".py", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + new + ".py"])
     call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + old + "_stream.py", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + new + "_stream.py"])
     call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + old + "_mapper.py", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + new + "_mapper.py"])
     call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + old + "_reducer.py", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + new + "_reducer.py"])
-  
-    app.db.connection.sadd(JOB_TYPES_KEY, new) 
-    app.db.connection.set(JOB_STATUS_KEY % new, "INACTIVE") 
+
+    app.db.connection.sadd(JOB_TYPES_KEY, new)
+    app.db.connection.set(JOB_STATUS_KEY % new, "INACTIVE")
     config = app.config['UPLOAD_FOLDER'] + new + "/" + "app_config.py"
     template = open(config).read()
     template = template.replace(old, new)
     makeFile(config, template)
-    
+
     mapper = app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + new + "_mapper.py"
     template = open(mapper).read()
     template = template.replace(old, new)
@@ -364,12 +365,12 @@ def duplicateJob(old, new):
     template = open(stream).read()
     template = template.replace(old, new)
     makeFile(stream, template)
-    
+
     reducer = app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + new + "_reducer.py"
     template = open(reducer).read()
     template = template.replace(old, new)
     makeFile(reducer, template)
-    
+
 def makeFile(filename, filecontent):
     file = open(filename, 'w')
     file.write(filecontent)
@@ -414,7 +415,7 @@ def makeTestFile(jobtype):
     mapper_content = open(app.config['UPLOAD_FOLDER'] + jobtype + "/surfiki_" + jobtype + "_mapper.py").read()
     mapper_content = mapper_content[mapper_content.find('def map'):]
     template = template.replace("MAPPER_CONTENT", mapper_content)
-    makeFile(filename, template)   
+    makeFile(filename, template)
 
 def testRunJob(jobtype):
     app.db.connection.sadd(JOB_TEST, jobtype)
@@ -427,7 +428,7 @@ def testRunJob(jobtype):
     #    call(["pyflakes", app.config['UPLOAD_FOLDER'] + jobtype + "/surfiki_" + jobtype + "_mapper.py"], stdout = fhandle, stderr = fhandle)
     #    call(["pyflakes", app.config['UPLOAD_FOLDER'] + jobtype + "/surfiki_" + jobtype + "_reducer.py"], stdout = fhandle, stderr = fhandle)
     #    call(["python", app.config['UPLOAD_FOLDER'] + jobtype + "/test_" + jobtype + ".py"], stdout = fhandle, stderr = fhandle)
-    subprocess.Popen("python " + app.config['UPLOAD_FOLDER'] + jobtype + "/test_" + jobtype + ".py >> " + filename + " 2>&1", shell=True)    
+    subprocess.Popen("python " + app.config['UPLOAD_FOLDER'] + jobtype + "/test_" + jobtype + ".py >> " + filename + " 2>&1", shell=True)
 
 def stopJob(job):
     mappers = app.db.connection.smembers(MAPPERS_KEY)
@@ -490,7 +491,7 @@ def test(jobTest):
     content = open("/var/log/mrtest/test_" + jobTest + ".log").read()
     open("/var/log/mrtest/test_" + jobTest + ".log")
     g.currenttestresult = content
-    return render_template('test_job.html') 
+    return render_template('test_job.html')
 
 @app.route('/start', methods=['GET', 'POST'])
 def start():
@@ -528,22 +529,22 @@ def start():
         if 'Test Job' in request.form:
             jobTest = request.form['Test Job']
             testRunJob(jobTest)
-            return redirect("%s%s" % (url_for('index'), "#tab-jobs")) 
+            return redirect("%s%s" % (url_for('index'), "#tab-jobs"))
         if 'Delete Job Type' in request.form:
             jobdelete = request.form['Delete Job Type']
             shutil.rmtree(os.path.join(app.config['UPLOAD_FOLDER'] + jobdelete))
             app.db.connection.srem(JOB_TYPES_KEY, jobdelete)
             remove_port(jobdelete)
-            remove_all_jobs(jobdelete) 
+            remove_all_jobs(jobdelete)
             return redirect("%s%s" % (url_for('index'), "#tab-jobs"))
         if 'Schedule Job' in request.form:
             jobschedule = request.form['Schedule Job']
             scheduleString = request.form['schedule']
-            schedule = scheduleString.encode("ascii") 
+            schedule = scheduleString.encode("ascii")
             if len(schedule.strip()) == 0:
                 remove_schedule(jobschedule)
             else:
-                remove_schedule(jobschedule)           
+                remove_schedule(jobschedule)
                 new_schedule(jobschedule, scheduleString)
             return redirect("%s%s" % (url_for('index'), "#tab-jobs"))
         jobtype = request.form['Job Type']
@@ -696,5 +697,5 @@ def key(key):
 def delete_key(key):
     app.db.connection.delete(key)
     return redirect(url_for('stats'))
- 
+
 

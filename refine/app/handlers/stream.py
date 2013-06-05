@@ -1,5 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 
 import time
 import logging
@@ -38,7 +39,7 @@ class StreamHandler(BaseHandler):
         self.redis.set(job_status, "IDLE")
         try:
             start = time.time()
-            self.redis.set(job_status, "STREAMING")  
+            self.redis.set(job_status, "STREAMING")
             input_stream = self.application.input_streams[job_key]
             items = input_stream.process(self.application, arguments)
             if hasattr(input_stream, 'group_size'):
@@ -96,7 +97,7 @@ class StreamHandler(BaseHandler):
 
                 self.redis.incr(PROCESSED)
                 self.redis.incr(PROCESSED_SUCCESS)
- 
+
                 self.finish()
                 self.redis.set(job_status, "IDLE")
         finally:
