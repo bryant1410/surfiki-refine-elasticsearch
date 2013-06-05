@@ -269,7 +269,7 @@ This assumes you have an Elasticsearch index with keywords and a date field that
 	#!/usr/bin/env python
 	# -*- coding: utf-8 -*-
 
-	# FILE: surfiki_DempTemplate_stream.py
+	# FILE: surfiki_DemoTemplate_stream.py
 
 
 	from os.path import abspath, dirname, join
