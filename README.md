@@ -144,7 +144,7 @@ Create a crontab file for root user (Since this is assuming a fresh ubuntu insta
 Update and install packages
 
 	$ apt-get update
-	$ apt-get install -y build-essential openssl libssl-dev pkg-config git-core g++ curl libxml2-dev python-dev
+	$ apt-get install -y build-essential openssl libssl-dev pkg-config git-core g++ curl libxml2-dev python-dev python-pip
 
 Clone Project in to root (/root/)
  
@@ -158,8 +158,8 @@ Install redis
 	$ tar -xzf redis-2.6.10.tar.gz
 	$ cd redis-2.6.10/
 
-	$ sudo make
-	$ sudo make install
+	$ make
+	$ make install
 
 	$ cd utils
 
@@ -188,8 +188,8 @@ Install node.js v0.6.21
 	$ apt-get update
 
 	$ cd /usr/local/src
-	$ sudo wget http://nodejs.org/dist/v0.6.21/node-v0.6.21.tar.gz
-	$ sudo tar -xzf node-v0.6.21.tar.gz
+	$ wget http://nodejs.org/dist/v0.6.21/node-v0.6.21.tar.gz
+	$ tar -xzf node-v0.6.21.tar.gz
 	$ cd node-v0.6.21/
 
 	$ ./configure
@@ -204,7 +204,7 @@ Install Cloud9 Editor
 
 	Install and build modules (from the Surfiki Refine Repo on your filesystem)
 	
-	$ cd cloud9
+	$ cd /root/refine/cloud9
 	$ npm install
 
 	Install cloud9 (from the Surfiki Refine Repo on  your filesystem) as an upstart job 
@@ -232,13 +232,13 @@ Configure Surfiki Refine (Or leave as configured below)
 	
 Starting Surfiki Refine
 
-	
-	$ ./refine/server_startup.sh
+	$ cd /root/refine/
+	$ ./server_startup.sh
 	
 Stopping Surfiki Refine
 
 	
-	$ ./refine/server_cleanup.sh
+	$ ./server_cleanup.sh
 
     
 ###Usage Instructions
