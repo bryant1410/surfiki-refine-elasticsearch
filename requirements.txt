@@ -1,0 +1,16 @@
+redis
+tornado
+tornado-redis
+tornado-pyvows
+ujson
+flask
+argparse
+hiredis
+pyflakes
+pyelasticsearch
+watchdog
+psutil
+numpy
+nltk
+
+

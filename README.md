@@ -165,12 +165,10 @@ Install redis
 
 	$ ./install_server.sh
 	
-Update redis to support password config
+Copy the config for redis
 
-	$ edit /etc/redis/6379.conf
-	# Locate the Security section
-	# Uncomment requirepass and enter the password surfikiMR next to it (Ex. requirepass surfikiMR)
-	# Save the file
+	$ cd /root/refine
+	$ mv 6379.conf /etc/redis/6379.conf
 	
 	# Restart redis
 	$ /etc/init.d/redis_6379 stop
@@ -178,20 +176,9 @@ Update redis to support password config
 	
     
 Install Dependencies
-
-	$ pip install redis
-	$ pip install tornado-redis
-	$ pip install tornado
-	$ pip install ujson
-	$ pip install flask
-	$ pip install argparse
-	$ pip install hiredis
-	$ pip install pyflakes
-	$ pip install pyelasticsearch
-	$ pip install watchdog
-	$ pip install psutil
-	$ pip install numpy - THIS IS OPTIONAL
-	$ pip install pyyaml nltk - THIS IS OPTIONAL (It is an import within the template, remove as needed)
+	
+	$ cd /root/refine
+	$ pip install -r requirements.txt
 
 The editor portion of Refine uses a specific version of node.js:
 
@@ -244,12 +231,12 @@ Configure Surfiki Refine (Or leave as configured below)
 	
 Starting Surfiki Refine
 
-	$ cd /root/refine/
+	$ cd /root/refine
 	$ ./server_startup.sh
 	
 Stopping Surfiki Refine
 
-	
+	$ cd /root/refine
 	$ ./server_cleanup.sh
 
     
