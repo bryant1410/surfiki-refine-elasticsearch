@@ -168,7 +168,7 @@ Install redis
 Update redis to support password config
 
 	$ edit /etc/redis/6379.conf
-	# ctrl-w to open search and find the requirepass
+	# Locate the Security section
 	# Uncomment requirepass and enter the password surfikiMR next to it (Ex. requirepass surfikiMR)
 	# Save the file
 	
