@@ -165,9 +165,21 @@ Install redis
 
 	$ ./install_server.sh
 	
+Update redis to support password config
+
+	$ edit /etc/redis/6379.conf
+	# ctrl-w to open search and find the requirepass
+	# Uncomment requirepass and enter the password surfikiMR next to it (Ex. requirepass surfikiMR)
+	# Save the file
+	
+	# Restart redis
+	$ /etc/init.d/redis_6379 stop
+	$ /etc/init.d/redis_6379 start
+	
     
 Install Dependencies
 
+	$ pip install redis
 	$ pip install tornado-redis
 	$ pip install tornado
 	$ pip install ujson
