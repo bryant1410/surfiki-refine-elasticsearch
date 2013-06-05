@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#!/usr/lib/python2.7
+# -*- coding: utf-8 -*-
+
 
 import sys
 import os
