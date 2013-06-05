@@ -4,7 +4,7 @@
 import sys
 import os
 
-sys.path.append('/root')
+sys.path.append('/root/')
 
 from os.path import abspath, isabs, join
 import logging
