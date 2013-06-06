@@ -13,7 +13,7 @@ def real_import(name):
         return reduce(getattr, name.split('.')[1:], __import__(name))
     return __import__(name)
 
-logger = logging.getLogger('R3ServiceApp')
+logger = logging.getLogger('SurfikiRefineServiceApp')
 
 def flush_dead_mappers(redis, mappers_key, ping_key):
     mappers = redis.smembers(mappers_key)

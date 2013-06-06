@@ -10,12 +10,12 @@ import tornado.ioloop
 from tornado.httpserver import HTTPServer
 import redis
 
-from refine.app.app import R3ServiceApp
+from refine.app.app import SurfikiRefineServiceApp
 from refine.app.config import Config
 
 
 def main(arguments=None):
-    '''Runs r³ server with the specified arguments.'''
+    '''Runs Surfiki Refine server with the specified arguments.'''
 
     parser = argparse.ArgumentParser(description='runs the application that processes stream requests for surfikiMR')
     parser.add_argument('-b', '--bind', type=str, default='0.0.0.0', help='the ip that surfikiMR will bind to')
@@ -35,18 +35,18 @@ def main(arguments=None):
 
     logging.basicConfig(level=getattr(logging, args.loglevel.upper()))
 
-    application = R3ServiceApp(redis=c, config=cfg, log_level=args.loglevel.upper())
+    application = SurfikiRefineServiceApp(redis=c, config=cfg, log_level=args.loglevel.upper())
 
     server = HTTPServer(application)
     server.bind(args.port, args.bind)
     server.start(1)
 
     try:
-        logging.debug('r³ service app running at %s:%d' % (args.bind, args.port))
+        logging.debug('Surfiki Refine service app running at %s:%d' % (args.bind, args.port))
         tornado.ioloop.IOLoop.instance().start()
     except KeyboardInterrupt:
         print
-        print "-- r³ service app closed by user interruption --"
+        print "-- Surfiki Refine service app closed by user interruption --"
 
 if __name__ == "__main__":
     main(sys.argv[1:])
