@@ -106,7 +106,7 @@ def main(arguments=None):
     parser = argparse.ArgumentParser(description='runs the application that processes stream requests for r³')
     parser.add_argument('-l', '--loglevel', type=str, default='warning', help='the log level that Surifki Refine will run under')
     parser.add_argument('--redis-host', type=str, default='0.0.0.0', help='the ip that Surifki Refine will use to connect to redis')
-    parser.add_argument('--redis-port', type=int, default=6379, help='the port that Surifki Refine will use to connect to redis')
+    parser.add_argument('--redis-port', type=int, default=7778, help='the port that Surifki Refine will use to connect to redis')
     parser.add_argument('--redis-db', type=int, default=0, help='the database that Surifki Refine will use to connect to redis')
     parser.add_argument('--redis-pass', type=str, default='', help='the password that Surifki Refine will use to connect to redis')
     parser.add_argument('--mapper-key', type=str, help='the unique identifier for this mapper', required=True)
