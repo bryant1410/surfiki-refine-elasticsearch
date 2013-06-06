@@ -126,6 +126,11 @@ Create a root user
 
 	$ sudo passwd root
 
+Logout and back in as root
+
+	$ logout
+	# Log back in as root
+
 Create a crontab file for root user (Since this is assuming a fresh ubuntu install, there is no crontab for root. We need to create one as Surfiki Refine will look for it upon startup for job scheduling. If you already have a root crontab file, then disregard.)
 
 	To Check if you have a crontab for root already existing:
@@ -164,6 +169,7 @@ Install redis
 	$ cd utils
 
 	$ ./install_server.sh
+	# Select all the defaults as presented
 	
 Copy the config for redis
 
