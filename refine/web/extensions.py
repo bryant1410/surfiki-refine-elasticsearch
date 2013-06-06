@@ -16,7 +16,7 @@ class RedisDB(object):
 
     def init_app(self, app):
         app.config.setdefault('REDIS_HOST', '0.0.0.0')
-        app.config.setdefault('REDIS_PORT', 7778)
+        app.config.setdefault('REDIS_PORT', 6379)
         app.config.setdefault('REDIS_DB', 0)
         app.config.setdefault('REDIS_PASS', None)
 

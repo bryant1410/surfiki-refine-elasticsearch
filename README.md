@@ -174,8 +174,7 @@ Install redis
 Copy the config for redis and set defaults
 
 	$ cd /root/refine
-	$ cp redis.conf /etc/redis/7778.conf
-	$ update-rc.d redis_7778 defaults
+	$ cp redis.conf /etc/redis/6379.conf
 	
 	# Restart redis
 	$ /etc/init.d/redis_6379 stop
@@ -233,7 +232,7 @@ Configure Surfiki Refine (Or leave as configured below)
 	UPLOAD_FOLDER = '/refine/jobs/refine/'
 
 	REDIS_HOST = 'localhost'
-	REDIS_PORT = 7778
+	REDIS_PORT = 6379
 	REDIS_PASS = 'surfikiMR'
 	
 Starting Surfiki Refine

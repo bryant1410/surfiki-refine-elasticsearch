@@ -22,7 +22,7 @@ def main(arguments=None):
     parser.add_argument('-p', '--port', type=int, default=9999, help='the port that surfikiMR will bind to')
     parser.add_argument('-l', '--loglevel', type=str, default='warning', help='the log level that surfikiMR will run under')
     parser.add_argument('--redis-host', type=str, default='0.0.0.0', help='the ip that surfikiMR will use to connect to redis')
-    parser.add_argument('--redis-port', type=int, default=7778, help='the port that surfikiMR will use to connect to redis')
+    parser.add_argument('--redis-port', type=int, default=6379, help='the port that surfikiMR will use to connect to redis')
     parser.add_argument('--redis-db', type=int, default=0, help='the database that surfikiMR will use to connect to redis')
     parser.add_argument('--redis-pass', type=str, default='', help='the password that surfikiMR will use to connect to redis')
     parser.add_argument('-c', '--config-file', type=str, help='the config file that surfikiMR will use to load input stream classes and reducers', required=True)

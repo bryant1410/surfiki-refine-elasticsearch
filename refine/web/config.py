@@ -10,5 +10,5 @@ WEB_PORT = 8888
 UPLOAD_FOLDER = '/root/refine/jobs/refine/'
 
 REDIS_HOST = '0.0.0.0'
-REDIS_PORT = 7778
+REDIS_PORT = 6379
 REDIS_PASS = 'surfikiMR'
