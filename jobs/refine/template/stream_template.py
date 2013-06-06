@@ -38,7 +38,7 @@ class CLASSNAME:
               "must": [
                 {
                   "range": {
-                    "YOUR DATE TIME FIELD": {
+                    "dtInsertDT": {
                       "from": begin,
                       "to": current
                     }

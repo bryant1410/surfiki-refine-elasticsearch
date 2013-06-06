@@ -34,5 +34,5 @@ class CLASSNAME:
             key = {}
             key['name'] = word
             key['count'] = word_freq[word]
-            es.index("YOUR NEW INDEX", "YOUR NEW INDEX PREFIX", key)
+            es.index("YOUR NEW INDEX", "YOUR NEW INDEX", key)
         return word_freq
