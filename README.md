@@ -171,10 +171,12 @@ Install redis
 	$ ./install_server.sh
 	# Select all the defaults as presented
 	
-Copy the config for redis
+Copy the config for redis and set defaults
 
 	$ cd /root/refine
-	$ mv 6379.conf /etc/redis/6379.conf
+	$ cp 6379.conf /etc/redis/6379.conf
+	$ mkdir /var/redis/6379
+	$ update-rc.d redis_6379 defaults
 	
 	# Restart redis
 	$ /etc/init.d/redis_6379 stop
