@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 from collections import defaultdict
 import nltk
 import os
@@ -18,9 +17,8 @@ import time
 from pyelasticsearch import *
 from pyelasticsearch.client import es_kwargs
 
-
-class CLASSNAME:
-    job_type = 'JOBTYPE'
+class SurfikiDemoTemplateReducer:
+    job_type = 'DemoTemplate'
 
     def reduce(self, app, items):
         # Init the instance for search
@@ -34,5 +32,5 @@ class CLASSNAME:
             key = {}
             key['name'] = word
             key['count'] = word_freq[word]
-            es.index("YOUR NEW INDEX", "YOUR NEW INDEX PREFIX", key)
+            es.index("YOUR INSERT INDEX", "YOUR INSERT INDEX PREFIX", key)
         return word_freq

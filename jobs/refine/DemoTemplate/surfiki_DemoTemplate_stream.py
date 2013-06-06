@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 from os.path import abspath, dirname, join
 import httplib
 import time
@@ -18,10 +17,8 @@ import six
 # Test that __all__ is sufficient:
 from pyelasticsearch import *
 from pyelasticsearch.client import es_kwargs
-
-
-class CLASSNAME:
-    job_type = 'JOBTYPE'
+class SurfikiDemoTemplateStream:
+    job_type = 'DemoTemplate'
     group_size = 20
 
     def process(self, app, arguments):
@@ -54,23 +51,14 @@ class CLASSNAME:
           "sort": [],
           "facets": {}
         }
-        result = es.search(
-            query,
-            index='YOUR ELASTIC SEARCH INDEX',
-            es_from=0,
-            size=0)
+        result = es.search(query, index='YOUR ELASTIC SEARCH INDEX', es_from=0, size=0)
         # Get the total number of hits, preparing for paging control
         total = int(str(result['hits']['total']))
         print total
         query_res = []
         # Paging handling using from--size ES Query API
-        for index in range(0, (total - 1) / batch_size + 1):
-            result = es.search(
-                query,
-                index='YOUR ELASTIC SEARCH INDEX',
-                es_from=index *
-                batch_size,
-                size=batch_size)
+        for index in range(0, (total - 1)/batch_size + 1):
+            result = es.search(query, index='YOUR ELASTIC SEARCH INDEX', es_from=index*batch_size, size=batch_size)
             hits = result['hits']['hits']
             query_res = query_res + hits
         return query_res

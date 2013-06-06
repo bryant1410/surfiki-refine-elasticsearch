@@ -384,7 +384,7 @@ def makeAppConfig(jobtype, desc):
     filename = os.path.join(app.config['UPLOAD_FOLDER'] + jobtype, 'app_config.py').encode("ascii")
     streamdef = jobtype+'.surfiki_' + jobtype + '_stream' + '.Surfiki'+ jobtype + 'Stream'
     reducerdef = jobtype+'.surfiki_' + jobtype + '_reducer' + '.Surfiki'+ jobtype + 'Reducer'
-    filecontent = '#!/usr/bin/python\n'+ '# -*- coding: utf-8 -*-\n\n#Desc'+desc+'\n'+'INPUT_STREAMS = [\n    \'' +streamdef+ '\']\n'+'REDUCERS = [\n    \''+reducerdef+'\']'
+    filecontent = '#!/usr/bin/env python\n'+ '# -*- coding: utf-8 -*-\n\n#Desc'+desc+'\n'+'INPUT_STREAMS = [\n    \'' +streamdef+ '\']\n'+'REDUCERS = [\n    \''+reducerdef+'\']'
     makeFile(filename, filecontent)
 
 def makeStream(jobtype):
