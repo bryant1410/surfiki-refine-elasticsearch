@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 import time
 import logging
 from uuid import uuid4
@@ -13,7 +12,7 @@ import tornado.gen
 
 from refine.app.handlers import BaseHandler
 from refine.app.utils import DATETIME_FORMAT
-from refine.app.keys import PROCESSED, PROCESSED_FAILED, PROCESSED_SUCCESS, JOB_STATUS_KEY, JOB_TYPE_KEY, MAPPER_INPUT_KEY, MAPPER_OUTPUT_KEY, MAPPER_ERROR_KEY
+from refine.app.keys import PROCESSED, PROCESSED_FAILED, PROCESSED_SUCCESS, JOB_STATUS_KEY, JOB_TYPE_KEY, MAPPER_INPUT_KEY, MAPPER_OUTPUT_KEY, MAPPER_ERROR_KEY, JOB_LAST_RESULT
 
 class StreamHandler(BaseHandler):
     def group_items(self, stream_items, group_size):
@@ -29,77 +28,85 @@ class StreamHandler(BaseHandler):
 
     @tornado.web.asynchronous
     def get(self, job_key):
-        arguments = self.request.arguments
-        job_id = uuid4()
-        job_date = datetime.now()
+        getLast = self.get_argument("last", default="0", strip=False)
+        if (self.redis.exists(JOB_LAST_RESULT % job_key) and getLast == "1"):
+            result = self.redis.get(JOB_LAST_RESULT % job_key)
+            self.set_header('Content-Type', 'application/json')
+            self.write(result)
+            self.finish()
+        else:
+            arguments = self.request.arguments
+            job_id = uuid4()
+            job_date = datetime.now()
 
-        job_type_input_queue = JOB_TYPE_KEY % job_key
-        self.redis.sadd(job_type_input_queue, str(job_id))
-        job_status = JOB_STATUS_KEY % job_key
-        self.redis.set(job_status, "IDLE")
-        try:
-            start = time.time()
-            self.redis.set(job_status, "STREAMING")
-            input_stream = self.application.input_streams[job_key]
-            items = input_stream.process(self.application, arguments)
-            if hasattr(input_stream, 'group_size'):
-                items = self.group_items(items, input_stream.group_size)
-
-            mapper_input_queue = MAPPER_INPUT_KEY % job_key
-            mapper_output_queue = MAPPER_OUTPUT_KEY % (job_key, job_id)
-            mapper_error_queue = MAPPER_ERROR_KEY % job_key
-            with self.redis.pipeline() as pipe:
+            job_type_input_queue = JOB_TYPE_KEY % job_key
+            self.redis.sadd(job_type_input_queue, str(job_id))
+            job_status = JOB_STATUS_KEY % job_key
+            try:
                 start = time.time()
+                self.redis.set(job_status, "STREAMING")
+                input_stream = self.application.input_streams[job_key]
+                items = input_stream.process(self.application, arguments)
+                if hasattr(input_stream, 'group_size'):
+                    items = self.group_items(items, input_stream.group_size)
 
-                for item in items:
-                    msg = {
-                        'output_queue': mapper_output_queue,
-                        'job_id': str(job_id),
-                        'job_key': job_key,
-                        'item': item,
-                        'date': job_date.strftime(DATETIME_FORMAT),
-                        'retries': 0
-                    }
-                    pipe.rpush(mapper_input_queue, dumps(msg))
-                pipe.execute()
-            logging.debug("input queue took %.2f" % (time.time() - start))
-            self.redis.set(job_status, "MAPPING")
-            start = time.time()
-            results = []
-            errored = False
-            while (len(results) < len(items)):
-                key, item = self.redis.blpop(mapper_output_queue)
-                json_item = loads(item)
-                if 'error' in json_item:
-                    json_item['retries'] -= 1
-                    self.redis.hset(mapper_error_queue, json_item['job_id'], dumps(json_item))
-                    errored = True
-                    break
-                results.append(loads(json_item['result']))
+                mapper_input_queue = MAPPER_INPUT_KEY % job_key
+                mapper_output_queue = MAPPER_OUTPUT_KEY % (job_key, job_id)
+                mapper_error_queue = MAPPER_ERROR_KEY % job_key
+                with self.redis.pipeline() as pipe:
+                    start = time.time()
 
-            self.redis.delete(mapper_output_queue)
-            logging.debug("map took %.2f" % (time.time() - start))
-            if errored:
-                self.redis.incr(PROCESSED)
-                self.redis.incr(PROCESSED_FAILED)
-                self.redis.set(job_status, "ERROR")
-                self._error(500, 'Mapping failed. Check the error queue.')
-            else:
+                    for item in items:
+                        msg = {
+                            'output_queue': mapper_output_queue,
+                            'job_id': str(job_id),
+                            'job_key': job_key,
+                            'item': item,
+                            'date': job_date.strftime(DATETIME_FORMAT),
+                            'retries': 0
+                        }
+                        pipe.rpush(mapper_input_queue, dumps(msg))
+                    pipe.execute()
+                logging.debug("input queue took %.2f" % (time.time() - start))
+                self.redis.set(job_status, "MAPPING")
                 start = time.time()
-                self.redis.set(job_status, "REDUCING")
-                reducer = self.application.reducers[job_key]
-                result = reducer.reduce(self.application, results)
-                logging.debug("reduce took %.2f" % (time.time() - start))
+                results = []
+                errored = False
+                while (len(results) < len(items)):
+                    key, item = self.redis.blpop(mapper_output_queue)
+                    json_item = loads(item)
+                    if 'error' in json_item:
+                        json_item['retries'] -= 1
+                        self.redis.hset(mapper_error_queue, json_item['job_id'], dumps(json_item))
+                        errored = True
+                        break
+                    results.append(loads(json_item['result']))
 
-                self.set_header('Content-Type', 'application/json')
+                self.redis.delete(mapper_output_queue)
+                logging.debug("map took %.2f" % (time.time() - start))
+                if errored:
+                    self.redis.incr(PROCESSED)
+                    self.redis.incr(PROCESSED_FAILED)
+                    self.redis.set(job_status, "ERROR")
+                    self.redis.set(JOB_LAST_RESULT % job_key, "ERROR")
+                    self._error(500, 'Mapping failed. Check the error queue.')
+                else:
+                    start = time.time()
+                    self.redis.set(job_status, "REDUCING")
+                    reducer = self.application.reducers[job_key]
+                    result = reducer.reduce(self.application, results)
+                    logging.debug("reduce took %.2f" % (time.time() - start))
 
-                self.write(dumps(result))
+                    self.set_header('Content-Type', 'application/json')
 
-                self.redis.incr(PROCESSED)
-                self.redis.incr(PROCESSED_SUCCESS)
+                    self.redis.set(JOB_LAST_RESULT % job_key, dumps(result))
+                    self.write(dumps(result))
 
-                self.finish()
-                self.redis.set(job_status, "IDLE")
-        finally:
-            self.redis.srem(job_type_input_queue, str(job_id))
+                    self.redis.incr(PROCESSED)
+                    self.redis.incr(PROCESSED_SUCCESS)
+
+                    self.finish()
+                    self.redis.set(job_status, "IDLE")
+            finally:
+                self.redis.srem(job_type_input_queue, str(job_id))
 

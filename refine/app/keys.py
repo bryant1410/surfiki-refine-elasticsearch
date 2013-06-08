@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 ALL_KEYS = 'surfiki::*'
 
 # MAPPER KEYS
@@ -18,6 +17,10 @@ JOB_TYPES_KEY = 'surfiki::job-types'
 JOB_TYPES_ERRORS_KEY = 'surfiki::jobs::*::errors'
 JOB_TYPE_KEY = 'surfiki::job-types::%s'
 JOB_STATUS_KEY = 'surfiki::job-types::status::%s'
+
+# LAST JOB RESULTS KEYS
+JOB_LAST_RESULT = 'surfiki::run::job::%s'
+
 # JOB PORT KEY
 JOB_PORT_KEY = 'surfiki::jobs::%s::port'
 

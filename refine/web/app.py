@@ -170,10 +170,8 @@ def before_request():
     g.mappers = get_mappers()
     g.currentfile = get_current_file()
     g.currentcontent = get_current_file_content()
-    #g.currenttestresult = get_current_job_testing_results()
     g.currenttestresult = ""
     g.jobtestlinks = get_all_test_link(g.job_types)
-#    g.currenttesting = app.db.connection.get(CURRENT_TEST)
 
 def get_all_test_link(alljobs):
     all_test_links = {}
@@ -207,8 +205,6 @@ def get_current_file():
 def get_current_file_content():
     return app.db.connection.get(CURRENT_CONTENT)
 
-#def get_current_job_testing_results():
-#    return app.db.connection.get(CURRENT_RESULT)
 
 def get_all_status(job_types):
     all_status = {}
@@ -223,6 +219,8 @@ def get_alll_job_streams():
         status = app.db.connection.get(JOB_STATUS_KEY % jobdef)
         if status == 'INACTIVE':
             all_streams[jobdef] = ""
+        elif status == 'IDLE':
+            all_streams[jobdef] = "http://" + app.config['WEB_HOST'] + ':' + job_port(jobdef) + "/stream/" + jobdef + "?last=1"
         else:
             all_streams[jobdef] = "http://" + app.config['WEB_HOST'] + ':' + job_port(jobdef) + "/stream/" + jobdef
     return all_streams
@@ -252,11 +250,6 @@ def get_mappers():
 
     return mappers_status
 
-#def get_job_filenames(jobtype):
-#    all_job_files = []
-#    for name in os.listdir('/root/refine/jobs/refine'+jobtype):
-#        all_job_files.append(name)
-#    return all_job_files
 
 def get_all_jobs_def():
     all_file_names = {}
@@ -342,7 +335,6 @@ def duplicateJob(old, new):
         return
     new_port(new)
     call(["mkdir", app.config['UPLOAD_FOLDER'] + new])
-    #call(["cp", "-r", ddapp.config['UPLOAD_FOLDER'] + old + "/*", app.config['UPLOAD_FOLDER'] + new])
     subprocess.call("cp -r " + app.config['UPLOAD_FOLDER'] + old + "/* " + app.config['UPLOAD_FOLDER'] + new, shell=True)
     call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + old + ".py", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + new + ".py"])
     call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + old + "_stream.py", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + new + "_stream.py"])
@@ -422,12 +414,6 @@ def testRunJob(jobtype):
     filename  = "/var/log/mrtest/test_" + jobtype + ".log"
     call(["rm", filename])
     call(["touch", filename])
-    #with open(filename, "w+") as fhandle:
-    #    call(["pyflakes", app.config['UPLOAD_FOLDER'] + jobtype + "/test_" + jobtype + ".py"], stdout = fhandle, stderr = fhandle)
-    #    call(["pyflakes", app.config['UPLOAD_FOLDER'] + jobtype + "/surfiki_" + jobtype + "_stream.py"], stdout = fhandle, stderr = fhandle)
-    #    call(["pyflakes", app.config['UPLOAD_FOLDER'] + jobtype + "/surfiki_" + jobtype + "_mapper.py"], stdout = fhandle, stderr = fhandle)
-    #    call(["pyflakes", app.config['UPLOAD_FOLDER'] + jobtype + "/surfiki_" + jobtype + "_reducer.py"], stdout = fhandle, stderr = fhandle)
-    #    call(["python", app.config['UPLOAD_FOLDER'] + jobtype + "/test_" + jobtype + ".py"], stdout = fhandle, stderr = fhandle)
     subprocess.Popen("python " + app.config['UPLOAD_FOLDER'] + jobtype + "/test_" + jobtype + ".py >> " + filename + " 2>&1", shell=True)
 
 def stopJob(job):
@@ -487,7 +473,6 @@ def upload():
 
 @app.route("/test/<jobTest>")
 def test(jobTest):
-#   jobTest = str(app.db.connection.get(CURRENT_TEST))
     content = open("/var/log/mrtest/test_" + jobTest + ".log").read()
     open("/var/log/mrtest/test_" + jobTest + ".log")
     g.currenttestresult = content
@@ -571,13 +556,11 @@ def start():
         classone = filename[:-3]
         mapperclass = classone+"."+classtwo
         # Start the App in backgorund process
-        subprocess.Popen('python refine/app/server.py --redis-port=6379 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
+        subprocess.Popen('python refine/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
         # Start all the mappers in background process
         for num in range(1, int(counts)+1):
-            subprocess.Popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=6379 --redis-pass=surfikiMR', shell=True,stdout=PIPE)
-        app.db.connection.set(JOB_STATUS_KEY % jobtype, "IDLE")
-        #return redirect("http://SurfikiMRM.surfiki.io:"+job_port(jobtype)+"/stream/" + jobtype)
-        #return render_template('run_job.html')
+            subprocess.Popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR', shell=True,stdout=PIPE)
+        app.db.connection.set(JOB_STATUS_KEY % jobtype, "READY")
         return redirect("%s%s" % (url_for('index'), "#tab-jobs"))
     return render_template('run_job.html')
 
