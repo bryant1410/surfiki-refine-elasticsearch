@@ -14,7 +14,6 @@ import hashlib
 import datetime
 import nltk
 from collections import defaultdict
-from pyes import *
 from pyelasticsearch import *
 from pyelasticsearch.client import es_kwargs
 from surfiki_DemoTemplate_stream import SurfikiDemoTemplateStream
