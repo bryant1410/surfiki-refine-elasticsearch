@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+import os
+
+sys.path.append('/root/refine')
 
 from datetime import datetime
 import signal
