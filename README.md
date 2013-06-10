@@ -149,7 +149,7 @@ Create a crontab file for root user (Since this is assuming a fresh ubuntu insta
 Update and install packages
 
 	$ apt-get update
-	$ apt-get install -y build-essential openssl libssl-dev pkg-config git-core g++ curl libxml2-dev python-dev python-pip
+	$ apt-get install -y build-essential openssl libssl-dev pkg-config git-core g++ curl libxml2-dev python-dev python-pip ssh
 
 Clone Project in to root (/root/)
  

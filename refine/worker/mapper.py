@@ -5,6 +5,7 @@ import sys
 import os
 
 sys.path.append('/root/refine')
+sys.path.append('/root/refine/jobs')
 
 from datetime import datetime
 import signal
