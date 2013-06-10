@@ -5,7 +5,7 @@ import sys
 import os
 
 sys.path.append('/root/refine')
-sys.path.append('/root/refine/jobs/')
+sys.path.append('/root/refine/jobs/AnthonyTest')
 
 import logging
 from datetime import datetime
