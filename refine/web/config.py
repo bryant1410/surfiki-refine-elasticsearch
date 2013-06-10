@@ -5,7 +5,7 @@
 DEBUG = True
 SECRET_KEY = 'development key'
 
-WEB_HOST = 'localhost'
+WEB_HOST = '0.0.0.0'
 WEB_PORT = 8888
 UPLOAD_FOLDER = '/root/refine/jobs/refine/'
 
