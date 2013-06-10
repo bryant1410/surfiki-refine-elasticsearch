@@ -62,7 +62,7 @@
   
   <div class="body">
     <div id="cloud9_holder">
-      <iframe id="cloud9" src="http://refine.surfiki.io:3131{% if g.currentfile %}/#{{g.currentfile}}{% endif %}" style="border: 0; width:130px; height:20px;"></iframe>
+      <iframe id="cloud9" src="http://{{ g.config.WEB_HOST }}:3131{% if g.currentfile %}/#{{g.currentfile}}{% endif %}" style="border: 0; width:130px; height:20px;"></iframe>
     </div>
     
     <div id="sense_holder">
@@ -74,6 +74,12 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/splitter.js') }}"></script>
   <script type="text/javascript">
   $().ready(function() {
+    window.addEventListener("message", function(e) {
+      if (e.data === "exit") {
+        window.location.href = "http://{{ g.config.WEB_HOST }}:{{ g.config.WEB_PORT }}/#tab-jobs";
+      }
+    }, false);
+    
     var waitForFinalEvent = (function () {
       var timers = {};
       return function (callback, ms, uniqueId) {
