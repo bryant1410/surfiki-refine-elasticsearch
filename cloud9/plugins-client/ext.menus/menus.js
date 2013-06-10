@@ -108,7 +108,7 @@ module.exports = ext.register("ext/menus/menus", {
         this.addItemByPath("File/~", new apf.divider(), 1000000);
         this.addItemByPath("File/Return To Jobs", new apf.item({
             onclick : function(){
-                top.window.location.href = "http://refine.surfiki.io:8888/#tab-jobs";
+                parent.postMessage("exit", "*")
             }
         }), 2000000);
 
