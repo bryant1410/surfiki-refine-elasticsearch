@@ -4,7 +4,6 @@
 import sys
 import os
 
-sys.path.append('/root/refine')
 
 import logging
 from datetime import datetime
