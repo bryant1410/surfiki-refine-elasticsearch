@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 import os, subprocess
 import shutil
 import re
@@ -205,7 +206,6 @@ def get_current_file():
 def get_current_file_content():
     return app.db.connection.get(CURRENT_CONTENT)
 
-
 def get_all_status(job_types):
     all_status = {}
     for job_type in job_types:
@@ -335,6 +335,7 @@ def duplicateJob(old, new):
         return
     new_port(new)
     call(["mkdir", app.config['UPLOAD_FOLDER'] + new])
+    #call(["cp", "-r", ddapp.config['UPLOAD_FOLDER'] + old + "/*", app.config['UPLOAD_FOLDER'] + new])
     subprocess.call("cp -r " + app.config['UPLOAD_FOLDER'] + old + "/* " + app.config['UPLOAD_FOLDER'] + new, shell=True)
     call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + old + ".py", app.config['UPLOAD_FOLDER'] + new + "/" + "test_" + new + ".py"])
     call(["mv", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + old + "_stream.py", app.config['UPLOAD_FOLDER'] + new + "/" + "surfiki_" + new + "_stream.py"])
@@ -376,7 +377,7 @@ def makeAppConfig(jobtype, desc):
     filename = os.path.join(app.config['UPLOAD_FOLDER'] + jobtype, 'app_config.py').encode("ascii")
     streamdef = jobtype+'.surfiki_' + jobtype + '_stream' + '.Surfiki'+ jobtype + 'Stream'
     reducerdef = jobtype+'.surfiki_' + jobtype + '_reducer' + '.Surfiki'+ jobtype + 'Reducer'
-    filecontent = '#!/usr/bin/env python\n'+ '# -*- coding: utf-8 -*-\n\n#Desc'+desc+'\n'+'INPUT_STREAMS = [\n    \'' +streamdef+ '\']\n'+'REDUCERS = [\n    \''+reducerdef+'\']'
+    filecontent = '#!/usr/bin/python\n'+ '# -*- coding: utf-8 -*-\n\n#Desc'+desc+'\n'+'INPUT_STREAMS = [\n    \'' +streamdef+ '\']\n'+'REDUCERS = [\n    \''+reducerdef+'\']'
     makeFile(filename, filecontent)
 
 def makeStream(jobtype):
@@ -543,7 +544,6 @@ def start():
         classtwo = None
         # before start, kill it first
         os.popen('/root/refine/kill_job.sh ' + jobtype)
-        #remove_all_jobs(jobtype)
         stopJob(jobtype)
         # Traverse all the files under this job, finding the mapper file, and retrieve the mapper class name
         for r,d,f in os.walk(app.config['UPLOAD_FOLDER'] + '/' +jobtype):
@@ -556,10 +556,10 @@ def start():
         classone = filename[:-3]
         mapperclass = classone+"."+classtwo
         # Start the App in backgorund process
-        subprocess.Popen('python refine/app/server.py --redis-port=7778 -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
+        subprocess.Popen('python refine/app/server.py --redis-port='+ str(app.config['REDIS_PORT']) + ' -p '+ job_port(jobtype) + ' --redis-pass=surfikiMR --config-file=jobs/refine/' + jobtype + '/app_config.py', shell=True,stdout=PIPE)
         # Start all the mappers in background process
         for num in range(1, int(counts)+1):
-            subprocess.Popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port=7778 --redis-pass=surfikiMR', shell=True,stdout=PIPE)
+            subprocess.Popen('python refine/worker/mapper.py --mapper-key=map-key-'+jobtype+str(num) + ' --mapper-class='+jobtype+'.'+mapperclass+' --redis-port='+ str(app.config['REDIS_PORT']) + ' --redis-pass=surfikiMR', shell=True,stdout=PIPE)
         app.db.connection.set(JOB_STATUS_KEY % jobtype, "READY")
         return redirect("%s%s" % (url_for('index'), "#tab-jobs"))
     return render_template('run_job.html')
