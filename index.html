@@ -1,0 +1,185 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+  <title>REFINE</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="css/home_style.css">
+  <link rel="stylesheet" href="css/screen.css">
+  <link rel="stylesheet" href="css/media_queries.css">
+  <link rel="stylesheet" href="css/code.css">
+  <link rel="stylesheet" href="http://f.fontdeck.com/s/css/m6Lez9WflF3tDDcWVkR43JhhHws/intridea.github.com/21671.css" type="text/css" />
+
+  <script src="js/libs/modernizr-2.5.3.min.js"></script>
+  
+</head>
+<body>
+  <div id="container">
+
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <header class="cf">
+		<section>
+			  <a href="http://www.intridea.com" id="tag"></a>
+		<div id="title">
+			<img src="img/logo_2x.png" id="reg_logo">
+			<!-- <img src="img/grape_logo_alt.png" id="alt_logo"> -->
+			<h1>REFINE</h1>
+		</div>
+		<div id="quick_links" class="cf">
+			<span class="button_outer"><a href="https://github.com/intridea/refine" alt="" class="button">Get it on GitHub</a></span>
+			<span class="button_outer"><a href="https://github.com/intridea/refine" alt=""  class="button">Full Documentation</a></span>
+			<span class="button_outer"><a href="https://github.com/intridea/refine/issues" alt=""  class="button">Report a Problem</a></span>				
+		</div> 
+		</section>
+  </header>
+  <div id="header_border"></div>
+  <div id="content_container">
+  <div role="main" id="content" class="cf">
+	<div class="col">
+		<h2>What is Refine?</h2>
+		<p>Originally designed to work with Elasticsearch indices and API. Refine allows you to take an input stream, transform and or manipulate it for your needs, then output it in a variety of formats.</p>
+		<p>With the variety of uses of Elasticsearch being seen in the its ecosystem (Search, Data Stores, API), a powerful and extensible processing tier was needed to meet Intridea’s needs. Our belief, is this can fit in to your Elasticsearch environment as well. And in turn, provide you with additional transformation and or manipulation capabilities.</p>
+		<p>At its heart, Refine is a collection of scripts, written by you in <a href="http://www.python.org">Python</a>.</p>
+
+
+    <h2>How does it work?</h2>
+	<p>Technically, Refine is Map-Reduce, which for each job you define incorporates:</p>
+	<ul>
+	<li>A stream script defines the source of your data. A query’s results (In the case of Elasticsearch) A file or files, or a Web API such as Twitter.</li>
+	<li>A mapper script takes the input, divides it into smaller sub-problems, and distributes them to workers. A worker may do this again in turn, leading to a multi-level tree structure. The worker processes the smaller problem, and passes the answer back to its master.</li>
+	<li>A reducer script collects the answers to all the sub-problems and combines them in some way to form the output – the answer to the problem it was originally trying to solve.</li>
+	<li>You can add as many scripts that your job may require, however the core is the stream, mapper and reducer scripts.</li>
+	</ul>
+
+	<h2>What are some examples?</h2>
+	<ul>
+	<li>Combining data from multiple indices in to a new index. With Refine you can either do this ad hoc or on a scheduled basis.</li>
+	<li>Splitting data from a single index in to new indices based upon some criteria. Refine makes this relatively simple to perform.</li>
+	<li>Statistical facets can be taxing on the heap. You can use Refine to process/transform/count this data and expose within a new index on a set schedule.</li>
+	<li>Transforming data already indexed with additional data. For example, some data has location information (lat, long) however you also want to store meta data associated with those locations Such as State, City and County information. While it makes sense to do some of this inline, with Refine you can do it after the initial data is already indexed.</li>
+	<li>Accessing third party API's to append data to existing indexed data. With Refine, accessing those API’s, injecting and or manipulating is a core feature.</li>
+	<li>Given a body of text, you can use Refine to split your stream into its separate words, perform a word count for the given word, then reduce it to a de-duped sorted array.</li>
+	<li>Given a collection of results, you can use Refine to further score each result against a series of validation criteria such as geographic region or category.</li>
+	<li>Need text to appear in various ways, before it can be processed further? Use Refine to prepend suffixes or concatenate strings, and dynamically add these as new attributes.</li>
+	</ul>
+
+
+	</div>
+	<div class="col">
+		<h2>Features:</h2>
+		<ul>
+		<li>See statistics for jobs in progress</li>
+		<li>Full-featured IDE for in-browser scripting, complete with color coding and autocomplete</li>
+		<li>Tabs allow you to edit multiple files simultaneously</li>
+		<li>Jobs are grouped into separate directories for easy file navigation</li>
+		<li>Exclusively featured to work with Elasticsearch (But not limited to Elasticsearch)</li>
+		<li>Results in JSON</li>
+		</ul>
+		
+	
+
+		<h2>Open Source Projects utilized:</h2>
+		<ul>
+			<li><a href="http://redis.io/">redis </a></li>
+			<li><a href="https://github.com/karmi/elasticsearch-paramedic">Paramedic</a></li>
+			<li><a href="https://github.com/bleskes/sense">Sense </a></li>
+			<li><a href="https://github.com/heynemann/r3">r3 </a></li>
+			<li><a href="http://anthonynystrom.github.io/python-dev-bootstrap/">Python Dev Bootstrap </a></li>
+			<li><a href="https://github.com/delan/lookout">Lookout </a></li>
+			<li><a href="http://flask.pocoo.org/">Flask </a></li>
+			<li><a href="http://twitter.github.io/bootstrap/">Twitter Bootstrap </a></li>
+			<li><a href="https://github.com/ajaxorg/cloud9/">Cloud9 </a></li>
+			<li><a href="http://python.org/">Python</a></li>
+		</ul>
+
+	
+
+	
+
+	
+
+		
+		<h2>About Surfiki</h2>
+		<p>Refine was developed as a part of Surfiki, an analysis engine for making sense of your data stream in real-time. <a href="http://www.surfiki.com">Learn more about how Surfiki can power your app!</a></p>
+		<h2>Created By:</h2>
+		<div id="author" class="cf">
+			<section class="bio">
+				<h1>Anthony Nyström</h1>
+				<ul class="author-links cf">
+					<li class="icn_twitter"><a href="https://twitter.com/AnthonyNystrom">Twitter</a></li>
+				</ul>
+				<p>Apart from being Intridea's Managing Director of Engineering, Anthony has specialized experience with software architecture (Mobile, App, Web, Enterprise) business analysis, functional &amp; technical design, development, implementation, deployment, support, and management.
+				Strong analysis, design, coding and execution expertise in medical imaging, bioinformatics, scientific computing (computational-biology, genetics (computational genomics), cheminformatics and applied-mathematics), data (all sizes), sentiment and semantic analysis.</p>
+			</section>
+		</div>
+		
+		<div id="author" class="cf">
+			<section class="bio">
+				<h1>Jeff Baier</h1>
+				<ul class="author-links cf">
+					<li class="icn_twitter"><a href="http://twitter.com/jeffbaier">Twitter</a></li>
+				</ul>
+				<p>Jeff Baier is a full stack developer with a passion for Python, RESTful API design and data security. He has experience developing efficient and scalable solutions for high traffic websites.
+
+				In his free time, Jeff enjoys helping local road races and triathlons by combining RFID tracking with high speed cameras for realtime results.</p>
+			</section>
+		</div>
+		
+		<div id="author" class="cf">
+			<section class="bio">
+				<h1>Curt Hu</h1>
+				<ul class="author-links cf">
+					<li class="icn_twitter"><a href="http://twitter.com/jeffbaier" style="background:none"></a></li>
+				</ul>
+				<p>Curt Hu is a software engineer with over five years of experience in Database Engine development and high performance Enterprise application design and development. He also has technical expertise in Mobile application development for Android and iOS.
+
+				When he's not deep in code, Curt enjoys listening to Jazz music, playing guitar, and hiking.</p>
+			</section>
+		</div>
+		
+		
+
+
+	</div>
+	
+	
+	
+  </div>
+  
+  <footer>
+	<section>
+	<a id="hiring" href="http://www.intridea.com/careers">We're Hiring!</a>
+	<span>Copyright &copy; 2013 <a href="http://www.intridea.com">Intridea</a>. Released under the MIT License on <a href="https://github.com/intridea/rebin">GitHub</a>.</span>
+	<a id="footer_logo" href="http://www.intridea.com">Intridea.com</a>
+
+	</section>
+  </footer>
+</div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+  	
+  <script src="js/plugins.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/css3-mediaqueries.js"></script> 
+  <script type="text/javascript" src="js/retina.js"></script>
+  
+  <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+  
+</body>
+</html>
