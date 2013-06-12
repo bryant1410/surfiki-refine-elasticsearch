@@ -421,8 +421,7 @@ def stopJob(job):
     mappers = app.db.connection.smembers(MAPPERS_KEY)
     for mapper in mappers:
         if mapper.startswith(job):
-            ping = job + '::' + mapper
-            app.db.connection.delete(LAST_PING_KEY % ping)
+            app.db.connection.delete(LAST_PING_KEY % mapper)
             app.db.connection.srem(MAPPERS_KEY, mapper)
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -520,6 +519,7 @@ def start():
             jobdelete = request.form['Delete Job Type']
             shutil.rmtree(os.path.join(app.config['UPLOAD_FOLDER'] + jobdelete))
             app.db.connection.srem(JOB_TYPES_KEY, jobdelete)
+            stopJob(jobdelete)
             remove_port(jobdelete)
             remove_all_jobs(jobdelete)
             return redirect("%s%s" % (url_for('index'), "#tab-jobs"))
