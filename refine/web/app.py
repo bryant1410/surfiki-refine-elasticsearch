@@ -519,6 +519,7 @@ def start():
             jobdelete = request.form['Delete Job Type']
             shutil.rmtree(os.path.join(app.config['UPLOAD_FOLDER'] + jobdelete))
             app.db.connection.srem(JOB_TYPES_KEY, jobdelete)
+            os.popen('/root/refine/kill_job.sh ' + jobdelete)
             stopJob(jobdelete)
             remove_port(jobdelete)
             remove_all_jobs(jobdelete)
