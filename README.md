@@ -217,27 +217,20 @@ Install Cloud9 Editor
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
 	
-Configure Surfiki Refine (Or leave as configured below for localhost) Host values should be populated with an accurate IP or fully qualified host name.
+Configure Surfiki Refine (Or leave as configured below)
 
 	Edit /refine/web/config.py
 	
-	#!/usr/bin/env python
+	#!/usr/bin/python
 	# -*- coding: utf-8 -*-
 
+	DEBUG = True
+	SECRET_KEY = 'development key'
 
-	DEBUG=True
-	SECRET_KEY='development key'
+	WEB_HOST = '0.0.0.0'
+	WEB_PORT = 8888
+	UPLOAD_FOLDER = '/refine/jobs/refine/'
 
-	WEB_HOST='0.0.0.0'
-	WEB_PORT=8888
-	UPLOAD_FOLDER='/root/refine/jobs/refine/'
-
-	REDIS_HOST='0.0.0.0'
-	REDIS_PORT=6379
-	REDIS_PASS='surfikiMR'
-
-<<<<<<< HEAD
-=======
 	REDIS_HOST = 'localhost'
 	REDIS_PORT = 6379
 	REDIS_PASS = 'surfikiMR'
@@ -246,7 +239,6 @@ Update your PYTHONPATH
 
 	$ export PYTHONPATH=$PYTHONPATH:/root/refine
 	
->>>>>>> develop
 Starting Surfiki Refine
 
 	$ cd /root/refine
@@ -485,7 +477,7 @@ All job code editing is performed online via the browser based IDE. If you prefe
 
 <a href="http://www.flickr.com/photos/95752811@N04/8917271544/" title="CodingInterface by NyströmAnthony, on Flickr"><img src="http://farm6.staticflickr.com/5449/8917271544_2294a111c7.jpg" width="500" height="424" alt="CodingInterface"></a>
 
-Above you see the four specific areas within the interface. When you select the edit button from the jobs sub tab, the editor will open with all files that define that job. You can make your edits and your changes will auto save. Because your stream stream file is used for the primary queries against your Elasticsearch cluster, it is convenient to also have the Elasticsearch Query Editor within the IDE such that you can formulate your query in advance of including it within the job.
+Above you see the four specific areas within the interface. When you select the edit button from the jobs sub tab, the editor will open with all files that define that job. You can make your edits and your changes will auto save. Because your stream stream file is used for the primary queries against your Elasticsearch cluster, it is convientent to also have the Elasticsearch Query Editor within the IDE such that you can formulate your query in advance of inlcuding it within the job.
 
 -
 
