@@ -153,7 +153,7 @@ Update and install packages
 
 Clone Project in to root (/root/)
  
-    $ cd root (If not alredy there)
+    $ cd /root (If not already there)
     $ git clone https://github.com/intridea/surfiki-refine-elasticsearch.git refine
     
 Install redis
@@ -235,6 +235,10 @@ Configure Surfiki Refine (Or leave as configured below)
 	REDIS_PORT = 6379
 	REDIS_PASS = 'surfikiMR'
 	
+Update your PYTHONPATH
+
+	$ export PYTHONPATH=$PYTHONPATH:/root/refine
+	
 Starting Surfiki Refine
 
 	$ cd /root/refine
@@ -244,6 +248,11 @@ Stopping Surfiki Refine
 
 	$ cd /root/refine
 	$ ./server_cleanup.sh
+	
+#####Enter the IP of the server hosting Refine and append the port: 8888
+
+---
+
 
     
 ###Usage Instructions
