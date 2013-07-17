@@ -235,10 +235,6 @@ Configure Surfiki Refine (Or leave as configured below)
 	REDIS_PORT = 6379
 	REDIS_PASS = 'surfikiMR'
 	
-Update your PYTHONPATH
-
-	$ export PYTHONPATH=$PYTHONPATH:/root/refine
-	
 Starting Surfiki Refine
 
 	$ cd /root/refine
