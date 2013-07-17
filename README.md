@@ -217,23 +217,23 @@ Install Cloud9 Editor
 	$ cp cloud9.conf /etc/init/
 	$ start cloud9
 	
-Configure Surfiki Refine (Or leave as configured below)
+Configure Surfiki Refine
 
-	Edit /refine/web/config.py
+	$ nano /refine/web/config.py
 	
 	#!/usr/bin/python
 	# -*- coding: utf-8 -*-
 
-	DEBUG = True
-	SECRET_KEY = 'development key'
+	DEBUG=True
+	SECRET_KEY='development key'
 
-	WEB_HOST = '0.0.0.0'
-	WEB_PORT = 8888
-	UPLOAD_FOLDER = '/refine/jobs/refine/'
+	WEB_HOST='0.0.0.0' (NOTE: You will need to enter an IP for your VM or Server)
+	WEB_PORT=8888
+	UPLOAD_FOLDER='/root/refine/jobs/refine/'
 
-	REDIS_HOST = 'localhost'
-	REDIS_PORT = 6379
-	REDIS_PASS = 'surfikiMR'
+	REDIS_HOST='0.0.0.0'
+	REDIS_PORT=6379
+	REDIS_PASS='surfikiMR'
 	
 Starting Surfiki Refine
 
