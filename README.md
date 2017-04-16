@@ -1,17 +1,17 @@
-##Surfiki Refine for Elasticsearch (Non Distributed Version)
+## Surfiki Refine for Elasticsearch (Non Distributed Version)
 
 - If you are interested in the distributed version of Refine, please contact [Intridea](http://www.intridea.com). As well, Intridea offers cloud hosted options for Refine. Please reach out to us anytime so we can help!
 
 
-###Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
+### Python Map-Reduce Transformation/Extraction/Manipulation Tier for Elasticsearch Indices
 
-#####Part of the Surfiki Data Engine
+##### Part of the Surfiki Data Engine
 - [Surfiki REBIN](http://intridea.github.io/REBIN/)
 - [Surifki Developer API](http://developer.surfiki.com/)
 - [Surfiki.com](http://www.surfiki.com)
 
 
-###What is Refine?
+### What is Refine?
 
 
 Designed to work with Elasticsearch indices and API. Refine allows you to take an input stream, transform and or manipulate it for your needs, then output it in a variety of formats.
@@ -23,7 +23,7 @@ With the variety of Elasticsearch uses seen within its ecosystem (Search, Data S
 At its heart, Refine is a collection of scripts, written by you in Python.
 
 
-###How does it work?
+### How does it work?
 
 
 Technically, Refine is Map-Reduce, which for each job you define incorporates:
@@ -42,7 +42,7 @@ Technically, Refine is Map-Reduce, which for each job you define incorporates:
 
  - You can add as many scripts that your job may require, however the core is the stream, mapper and reducer scripts.
  
-###What are some cool features?
+### What are some cool features?
 
 - Online Browser based code editing, job management and results collection.
 
@@ -61,7 +61,7 @@ Technically, Refine is Map-Reduce, which for each job you define incorporates:
 <a href="http://www.flickr.com/photos/95752811@N04/8739661106/" title="refine3 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7283/8739661106_1894aec094.jpg" width="376" height="345" alt="refine3"></a>
 <a href="http://www.flickr.com/photos/95752811@N04/8738541955/" title="refine4 by NyströmAnthony, on Flickr"><img src="http://farm8.staticflickr.com/7282/8738541955_ccac2229ee.jpg" width="376" height="345" alt="refine4"></a>
 
-###What are some examples?
+### What are some examples?
 
 
 - Combining data from multiple indices in to a new index. With Refine you can either do this ad hoc or on a scheduled basis.
@@ -89,7 +89,7 @@ validation criteria; such as geographic region or category data.
 - Need text to appear in various ways, before it can be processed further? Use Refine to prepend suffixes or concatenate strings, and dynamically add these as new attributes.
 
 
-###Open Source Projects utilized:
+### Open Source Projects utilized:
 
 
 - [redis](http://redis.io/)
@@ -116,7 +116,7 @@ Many thanks go out to Bernardo Heynemann for his excellent work with r3 and c9.i
 ---
 
 
-###Installation Instructions
+### Installation Instructions
 
 Supported Operating System: LINUX
 
@@ -245,13 +245,13 @@ Stopping Surfiki Refine
 	$ cd /root/refine
 	$ ./server_cleanup.sh
 	
-#####Enter the IP of the server hosting Refine and append the port: 8888
+##### Enter the IP of the server hosting Refine and append the port: 8888
 
 ---
 
 
     
-###Usage Instructions
+### Usage Instructions
 
 Included with Refine is a template job. Let's walk through using that as the basis for any job you may need to write.
 
@@ -270,7 +270,7 @@ Job Testing: You can easily test your job before actually running it. Simply, cl
 
 ---
 
-###Templates 
+### Templates 
 
 This assumes you have an Elasticsearch index with keywords and a date field that has been updated in the list n minutes. You likely will need to modify for your particular schema/s. It is a template to assist in understand the structure and use.
 
@@ -467,7 +467,7 @@ This assumes you have an Elasticsearch index with keywords and a date field that
     	
 ---
 
-###Code Editing
+### Code Editing
 
 All job code editing is performed online via the browser based IDE. If you prefer, you can edit offline and upload them; whichever is your preference.
 
